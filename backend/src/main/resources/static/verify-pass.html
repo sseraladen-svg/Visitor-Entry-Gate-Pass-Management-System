@@ -1,24 +1,242 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Verify Gate Pass</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Gate Pass - Vision Gate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .valid {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .info-box h3 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .info-box p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Verify Gate Pass</h1>
+<div class="navbar">
+    <div class="navbar-brand">🚪 Vision Gate</div>
+    <div class="nav-links">
+        <a href="login.html">Login</a>
+        <a href="create-pass.html">Create Pass</a>
+        <a href="verify-pass.html">Verify Pass</a>
+    </div>
+</div>
 
-<form action="/verify-pass" method="get">
+<div class="container">
+    <div class="icon">✅</div>
+    
+    <div class="header">
+        <h1>Verify Gate Pass</h1>
+        <p>Validate visitor pass authenticity</p>
+    </div>
 
-    <label>Pass ID:</label>
+    <div id="resultBox" class="result-box">
+        <div id="resultContent"></div>
+    </div>
 
-    <input type="text" name="passId">
+    <form action="/verify-pass" method="get">
 
-    <br><br>
+        <div class="form-group">
+            <label for="passId">Pass ID</label>
+            <input type="text" id="passId" name="passId" required placeholder="Enter pass ID (e.g., PASS1)">
+        </div>
 
-    <button type="submit">Verify</button>
+        <button type="submit">Verify Pass</button>
 
-</form>
+    </form>
+
+    <div class="info-box">
+        <h3>🔍 How to Verify</h3>
+        <p>Enter the unique Pass ID assigned to a visitor. The system will check if the pass is valid and display visitor information.</p>
+    </div>
+</div>
+
+<script>
+    // Check if there's a result in the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const result = urlParams.get('result');
+    
+    if (result) {
+        const resultBox = document.getElementById('resultBox');
+        const resultContent = document.getElementById('resultContent');
+        
+        if (result.startsWith('Valid')) {
+            resultBox.className = 'result-box valid';
+            resultContent.innerHTML = '<strong>✅ ' + result + '</strong>';
+        } else {
+            resultBox.className = 'result-box invalid';
+            resultContent.innerHTML = '<strong>❌ ' + result + '</strong>';
+        }
+        
+        resultBox.style.display = 'block';
+    }
+</script>
 
 </body>
 </html>

@@ -1,11 +1,12 @@
 package com.visiongate;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class GatePassController {
 
     private List<GatePass> passes = new ArrayList<>();
@@ -25,7 +26,8 @@ public class GatePassController {
 
         passes.add(pass);
 
-        return "Pass created successfully. Pass ID: " + passId;
+        System.out.println("Pass created: " + passId + " for " + visitorName);
+        return "redirect:/create-pass.html?success=true";
     }
 
     @GetMapping("/verify-pass")
@@ -34,10 +36,13 @@ public class GatePassController {
         for (GatePass pass : passes) {
 
             if (pass.getPassId().equals(passId)) {
-                return "Valid Pass - Visitor: " + pass.getVisitorName();
+                String result = "Valid Pass - Visitor: " + pass.getVisitorName() + ", Purpose: " + pass.getPurpose();
+                System.out.println("Pass verified: " + result);
+                return "redirect:/verify-pass.html?result=" + java.net.URLEncoder.encode(result, java.nio.charset.StandardCharsets.UTF_8);
             }
         }
 
-        return "Invalid Pass";
+        System.out.println("Invalid pass attempt: " + passId);
+        return "redirect:/verify-pass.html?result=Invalid Pass - No matching pass found";
     }
 }

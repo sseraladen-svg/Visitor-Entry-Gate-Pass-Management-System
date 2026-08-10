@@ -1,28 +1,217 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Create Gate Pass</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Gate Pass - Vision Gate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+        
+        .info-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .info-box h3 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .info-box p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Create Gate Pass</h1>
+<div class="navbar">
+    <div class="navbar-brand">🚪 Vision Gate</div>
+    <div class="nav-links">
+        <a href="login.html">Login</a>
+        <a href="create-pass.html">Create Pass</a>
+        <a href="verify-pass.html">Verify Pass</a>
+    </div>
+</div>
 
-<form action="/create-pass" method="post">
+<div class="container">
+    <div class="icon">📝</div>
+    
+    <div class="header">
+        <h1>Create Gate Pass</h1>
+        <p>Register new visitor entry</p>
+    </div>
 
-    <label>Visitor Name:</label>
-    <input type="text" name="visitorName">
+    <div id="successMessage" class="success-message">
+        <strong>Success!</strong> Gate pass created successfully.
+    </div>
 
-    <br><br>
+    <form action="/create-pass" method="post">
 
-    <label>Purpose:</label>
-    <input type="text" name="purpose">
+        <div class="form-group">
+            <label for="visitorName">Visitor Name</label>
+            <input type="text" id="visitorName" name="visitorName" required placeholder="Enter visitor's full name">
+        </div>
 
-    <br><br>
+        <div class="form-group">
+            <label for="purpose">Purpose of Visit</label>
+            <input type="text" id="purpose" name="purpose" required placeholder="e.g., Meeting, Delivery, Interview">
+        </div>
 
-    <button type="submit">Create Pass</button>
+        <button type="submit">Create Gate Pass</button>
 
-</form>
+    </form>
+
+    <div class="info-box">
+        <h3>📋 Instructions</h3>
+        <p>Fill in the visitor details above to generate a gate pass. The system will automatically assign a unique pass ID.</p>
+    </div>
+</div>
 
 </body>
 </html>
