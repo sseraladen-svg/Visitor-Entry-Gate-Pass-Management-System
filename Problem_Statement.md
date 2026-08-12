@@ -3,6 +3,34 @@
 ## 1. Problem Overview
 Organizations face significant challenges in managing visitor entry and exit processes efficiently. Manual gate pass systems are time-consuming, prone to errors, and lack real-time tracking capabilities. Security personnel struggle to verify visitor authenticity, and there's no centralized system to monitor visitor movements within the premises.
 
+## 1.1 User Types
+- **Administrators**: System managers who configure user accounts and oversee system operations
+- **Security Personnel**: Staff responsible for gate pass verification and visitor entry/exit management
+- **Employees**: Company staff who may host visitors and require visitor management services
+
+## 1.2 Core Entities
+1. **User**: System users with authentication credentials and role-based access
+2. **Visitor**: External individuals visiting the premises with specific purposes
+3. **Employee**: Company staff members who may host visitors
+4. **GatePass**: Digital pass issued to visitors with unique identification
+5. **EntryLog**: Historical records tracking visitor entry and exit events
+
+## 1.3 User Roles
+1. **ADMIN**: Full system access including user management and configuration
+2. **SECURITY**: Gate pass verification and visitor management access
+3. **EMPLOYEE**: Limited access for visitor hosting and pass request
+
+## 1.4 Success Criteria
+- Users can successfully authenticate with database credentials
+- Gate passes are created with unique IDs and stored in database
+- Security personnel can verify gate passes in real-time
+- Visitor entry/exit events are logged for audit purposes
+- System maintains data persistence across application restarts
+- Employee information is properly managed and integrated with visitor system
+
+## 1.5 Chosen Technology Track
+**Java / Spring Boot** with traditional MVC architecture (Controller-Service-Repository pattern) and HTML/CSS frontend
+
 ## 2. Current System
 - Manual paper-based visitor registration
 - Physical gate passes that can be easily duplicated or lost
@@ -74,7 +102,7 @@ Vision Entry Gate Pass Management System - a web-based digital solution that aut
 
 ## 8. Implementation Plan
 **Phase 1: Database Setup**
-- Design database schema (USER, VISITOR, GATE_PASS tables)
+- Design database schema (USER, VISITOR, EMPLOYEE, GATE_PASS, ENTRY_LOG tables)
 - Create MySQL database
 - Implement JPA entities and repositories
 

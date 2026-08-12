@@ -188,7 +188,13 @@
     </div>
 
     <div id="successMessage" class="success-message">
-        <strong>Success!</strong> Gate pass created successfully.
+        <strong>✅ Gate Pass Created Successfully!</strong>
+        <div id="passDetails" style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px;">
+            <p><strong>Pass ID:</strong> <span id="passIdDisplay">-</span></p>
+            <p><strong>Visitor Name:</strong> <span id="visitorNameDisplay">-</span></p>
+            <p><strong>Purpose:</strong> <span id="purposeDisplay">-</span></p>
+            <p><strong>Status:</strong> <span id="statusDisplay">-</span></p>
+        </div>
     </div>
 
     <form action="/create-pass" method="post">
@@ -212,6 +218,23 @@
         <p>Fill in the visitor details above to generate a gate pass. The system will automatically assign a unique pass ID.</p>
     </div>
 </div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+        document.getElementById('successMessage').style.display = 'block';
+        
+        const passId = urlParams.get('passId');
+        const visitorName = urlParams.get('visitorName');
+        const purpose = urlParams.get('purpose');
+        const status = urlParams.get('status');
+        
+        if (passId) document.getElementById('passIdDisplay').textContent = passId;
+        if (visitorName) document.getElementById('visitorNameDisplay').textContent = visitorName;
+        if (purpose) document.getElementById('purposeDisplay').textContent = purpose;
+        if (status) document.getElementById('statusDisplay').textContent = status;
+    }
+</script>
 
 </body>
 </html>

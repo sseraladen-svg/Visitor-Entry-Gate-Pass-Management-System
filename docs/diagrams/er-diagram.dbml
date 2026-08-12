@@ -1,0 +1,42 @@
+// Vision Entry Gate Pass Management System - Database Schema
+
+Table users {
+  id BigInt [pk, increment]
+  username String [unique]
+  password String
+  role String
+}
+
+Table visitor {
+  id BigInt [pk, increment]
+  name String
+  phone String
+  purpose String
+}
+
+Table employee {
+  id BigInt [pk, increment]
+  employee_id String [unique]
+  name String
+  department String
+  email String [unique]
+  phone String
+}
+
+Table gate_pass {
+  id BigInt [pk, increment]
+  pass_id String [unique]
+  visitor_name String
+  purpose String
+  status String
+  created_date DateTime
+}
+
+Table entry_log {
+  id BigInt [pk, increment]
+  pass_id String
+  visitor_name String
+  action String
+  timestamp DateTime
+  notes String
+}

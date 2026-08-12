@@ -3,7 +3,7 @@ package com.visiongate.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 
     @Id

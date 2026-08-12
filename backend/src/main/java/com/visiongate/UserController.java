@@ -1,7 +1,6 @@
 package com.visiongate;
 
-import com.visiongate.entity.UserEntity;
-import com.visiongate.repository.UserRepository;
+import com.visiongate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping("/login")
     public String login(@RequestParam String username,
@@ -18,9 +17,7 @@ public class UserController {
 
         System.out.println("Login attempt - Username: " + username);
 
-        UserEntity user = userRepository.findByUsername(username);
-
-        if (user != null && user.getPassword().equals(password)) {
+        if (userService.validateCredentials(username, password)) {
             System.out.println("Login successful for user: " + username);
             return "redirect:/index.html";
         }
