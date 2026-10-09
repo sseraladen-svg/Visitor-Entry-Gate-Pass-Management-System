@@ -4,18 +4,12 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "gate_pass")
-public class GatePassEntity {
+@Table(name = "appointment")
+public class AppointmentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String passId;
-
-    @Column(nullable = false)
-    private Long visitorId;
 
     @Column(nullable = false)
     private String visitorName;
@@ -27,6 +21,9 @@ public class GatePassEntity {
     private String visitorPhone;
 
     @Column(nullable = false)
+    private String company;
+
+    @Column(nullable = false)
     private String hostName;
 
     @Column(nullable = false)
@@ -36,16 +33,16 @@ public class GatePassEntity {
     private String purpose;
 
     @Column(nullable = false)
-    private String visitDate;
+    private LocalDateTime appointmentDate;
 
     @Column(nullable = false)
-    private String visitTime;
+    private String appointmentTime;
 
     @Column(nullable = false)
-    private String status; // PENDING, APPROVED, REJECTED, INSIDE, EXITED, EXPIRED
+    private String status; // PENDING, APPROVED, REJECTED, COMPLETED, CANCELLED
 
     @Column
-    private String qrCode;
+    private String rejectionReason;
 
     @Column(nullable = false)
     private LocalDateTime createdDate;
@@ -53,33 +50,20 @@ public class GatePassEntity {
     @Column
     private LocalDateTime approvedDate;
 
-    @Column
-    private LocalDateTime entryTime;
+    public AppointmentEntity() {}
 
-    @Column
-    private LocalDateTime exitTime;
-
-    @Column
-    private String approvedBy;
-
-    @Column
-    private String notes;
-
-    public GatePassEntity() {}
-
-    public GatePassEntity(String passId, Long visitorId, String visitorName, String visitorEmail, 
-                         String visitorPhone, String hostName, String hostEmail, 
-                         String purpose, String visitDate, String visitTime) {
-        this.passId = passId;
-        this.visitorId = visitorId;
+    public AppointmentEntity(String visitorName, String visitorEmail, String visitorPhone, 
+                           String company, String hostName, String hostEmail, 
+                           String purpose, LocalDateTime appointmentDate, String appointmentTime) {
         this.visitorName = visitorName;
         this.visitorEmail = visitorEmail;
         this.visitorPhone = visitorPhone;
+        this.company = company;
         this.hostName = hostName;
         this.hostEmail = hostEmail;
         this.purpose = purpose;
-        this.visitDate = visitDate;
-        this.visitTime = visitTime;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
         this.status = "PENDING";
         this.createdDate = LocalDateTime.now();
     }
@@ -87,12 +71,6 @@ public class GatePassEntity {
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public String getPassId() { return passId; }
-    public void setPassId(String passId) { this.passId = passId; }
-
-    public Long getVisitorId() { return visitorId; }
-    public void setVisitorId(Long visitorId) { this.visitorId = visitorId; }
 
     public String getVisitorName() { return visitorName; }
     public void setVisitorName(String visitorName) { this.visitorName = visitorName; }
@@ -103,6 +81,9 @@ public class GatePassEntity {
     public String getVisitorPhone() { return visitorPhone; }
     public void setVisitorPhone(String visitorPhone) { this.visitorPhone = visitorPhone; }
 
+    public String getCompany() { return company; }
+    public void setCompany(String company) { this.company = company; }
+
     public String getHostName() { return hostName; }
     public void setHostName(String hostName) { this.hostName = hostName; }
 
@@ -112,33 +93,21 @@ public class GatePassEntity {
     public String getPurpose() { return purpose; }
     public void setPurpose(String purpose) { this.purpose = purpose; }
 
-    public String getVisitDate() { return visitDate; }
-    public void setVisitDate(String visitDate) { this.visitDate = visitDate; }
+    public LocalDateTime getAppointmentDate() { return appointmentDate; }
+    public void setAppointmentDate(LocalDateTime appointmentDate) { this.appointmentDate = appointmentDate; }
 
-    public String getVisitTime() { return visitTime; }
-    public void setVisitTime(String visitTime) { this.visitTime = visitTime; }
+    public String getAppointmentTime() { return appointmentTime; }
+    public void setAppointmentTime(String appointmentTime) { this.appointmentTime = appointmentTime; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public String getQrCode() { return qrCode; }
-    public void setQrCode(String qrCode) { this.qrCode = qrCode; }
+    public String getRejectionReason() { return rejectionReason; }
+    public void setRejectionReason(String rejectionReason) { this.rejectionReason = rejectionReason; }
 
     public LocalDateTime getCreatedDate() { return createdDate; }
     public void setCreatedDate(LocalDateTime createdDate) { this.createdDate = createdDate; }
 
     public LocalDateTime getApprovedDate() { return approvedDate; }
     public void setApprovedDate(LocalDateTime approvedDate) { this.approvedDate = approvedDate; }
-
-    public LocalDateTime getEntryTime() { return entryTime; }
-    public void setEntryTime(LocalDateTime entryTime) { this.entryTime = entryTime; }
-
-    public LocalDateTime getExitTime() { return exitTime; }
-    public void setExitTime(LocalDateTime exitTime) { this.exitTime = exitTime; }
-
-    public String getApprovedBy() { return approvedBy; }
-    public void setApprovedBy(String approvedBy) { this.approvedBy = approvedBy; }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
 }

@@ -13,17 +13,23 @@ public class GatePassController {
     private GatePassService gatePassService;
 
     @PostMapping("/create-pass")
-    public String createPass(@RequestParam String visitorName,
-                             @RequestParam String purpose) {
+    public String createPass(@RequestParam Long visitorId,
+                             @RequestParam String visitorName,
+                             @RequestParam String visitorEmail,
+                             @RequestParam String visitorPhone,
+                             @RequestParam String hostName,
+                             @RequestParam String hostEmail,
+                             @RequestParam String purpose,
+                             @RequestParam String visitDate,
+                             @RequestParam String visitTime) {
 
-        GatePassEntity pass = gatePassService.createPass(visitorName, purpose);
+        GatePassEntity pass = gatePassService.createPass(visitorId, visitorName, visitorEmail, 
+                                                          visitorPhone, hostName, hostEmail, 
+                                                          purpose, visitDate, visitTime);
         System.out.println("Pass created: " + pass.getPassId() + " for " + visitorName);
         
         // Redirect with all pass details for display
-        return "redirect:/create-pass.html?success=true&passId=" + pass.getPassId() + 
-               "&visitorName=" + java.net.URLEncoder.encode(visitorName, java.nio.charset.StandardCharsets.UTF_8) +
-               "&purpose=" + java.net.URLEncoder.encode(purpose, java.nio.charset.StandardCharsets.UTF_8) +
-               "&status=" + pass.getStatus();
+        return "redirect:/visitor-dashboard.html?success=true&passId=" + pass.getPassId();
     }
 
     @GetMapping("/verify-pass")
@@ -31,7 +37,7 @@ public class GatePassController {
 
         GatePassEntity pass = gatePassService.verifyPass(passId);
 
-        if (pass != null && "ACTIVE".equals(pass.getStatus())) {
+        if (pass != null && ("APPROVED".equals(pass.getStatus()) || "INSIDE".equals(pass.getStatus()))) {
             String result = "Valid Pass - Visitor: " + pass.getVisitorName() + ", Purpose: " + pass.getPurpose();
             System.out.println("Pass verified: " + result);
             return "redirect:/verify-pass.html?result=" + java.net.URLEncoder.encode(result, java.nio.charset.StandardCharsets.UTF_8);

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Dashboard - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">VISITOR GATE PASS MANAGEMENT</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="#" class="btn btn-secondary btn-sm">Help</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Welcome, <span id="visitorName">John Doe</span></h2>
+            <p>View your current gate pass and manage your visit information.</p>
+        </div>
+
+        <div class="grid grid-2" style="margin-bottom: 32px;">
+            <div class="card">
+                <h3 style="margin-bottom: 24px;">Current Gate Pass</h3>
+                
+                <div class="info-row">
+                    <span class="info-label">Pass ID</span>
+                    <span class="info-value" id="passId">PASS12345</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Visit Date</span>
+                    <span class="info-value" id="visitDate">October 8, 2026</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Visit Time</span>
+                    <span class="info-value" id="visitTime">10:00 AM</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Person to Meet</span>
+                    <span class="info-value" id="personToMeet">Jane Smith</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Purpose of Visit</span>
+                    <span class="info-value" id="purpose">Business Meeting</span>
+                </div>
+                
+                <div class="info-row">
+                    <span class="info-label">Pass Status</span>
+                    <span class="status-badge status-approved" id="passStatus">APPROVED</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 24px;">Quick Actions</h3>
+                
+                <div class="action-grid">
+                    <div class="action-card" onclick="viewGatePass()">
+                        <h4>View Gate Pass</h4>
+                        <p>See full pass details</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="viewQRCode()">
+                        <h4>View QR Code</h4>
+                        <p>Show your pass QR code</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="viewVisitHistory()">
+                        <h4>Visit History</h4>
+                        <p>View past visits</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="changePassword()">
+                        <h4>Change Password</h4>
+                        <p>Update your password</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom: 24px;">Visit Information</h3>
+            
+            <div class="grid grid-2">
+                <div>
+                    <p style="margin-bottom: 8px;"><strong style="color: var(--grey-800);">Visitor Name:</strong> <span id="visitorNameDetail">John Doe</span></p>
+                    <p style="margin-bottom: 8px;"><strong style="color: var(--grey-800);">Email:</strong> <span id="visitorEmail">john.doe@example.com</span></p>
+                    <p style="margin-bottom: 8px;"><strong style="color: var(--grey-800);">Phone:</strong> <span id="visitorPhone">+1 234 567 8900</span></p>
+                </div>
+                <div>
+                    <p style="margin-bottom: 8px;"><strong style="color: var(--grey-800);">Company:</strong> <span id="visitorCompany">Acme Corporation</span></p>
+                    <p style="margin-bottom: 8px;"><strong style="color: var(--grey-800);">Department:</strong> <span id="visitorDepartment">Sales</span></p>
+                    <p style="margin-bottom: 8px;"><strong style="color: var(--grey-800);">Host:</strong> <span id="visitorHost">Jane Smith</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // TODO: Replace with actual API calls to fetch visitor data
+    function viewGatePass() {
+        alert('View Gate Pass feature - Would show detailed pass information');
+    }
+
+    function viewQRCode() {
+        alert('View QR Code feature - Would display QR code for the pass');
+    }
+
+    function viewVisitHistory() {
+        alert('Visit History feature - Would show past visit records');
+    }
+
+    function changePassword() {
+        window.location.href = 'change-password.html';
+    }
+
+    // Simulate loading visitor data
+    document.addEventListener('DOMContentLoaded', function() {
+        // In production, this would be fetched from the backend
+        const visitorData = {
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            phone: '+1 234 567 8900',
+            company: 'Acme Corporation',
+            department: 'Sales',
+            host: 'Jane Smith',
+            passId: 'PASS12345',
+            visitDate: 'October 8, 2026',
+            visitTime: '10:00 AM',
+            personToMeet: 'Jane Smith',
+            purpose: 'Business Meeting',
+            status: 'APPROVED'
+        };
+
+        // Update the page with visitor data
+        document.getElementById('visitorName').textContent = visitorData.name;
+        document.getElementById('visitorNameDetail').textContent = visitorData.name;
+        document.getElementById('visitorEmail').textContent = visitorData.email;
+        document.getElementById('visitorPhone').textContent = visitorData.phone;
+        document.getElementById('visitorCompany').textContent = visitorData.company;
+        document.getElementById('visitorDepartment').textContent = visitorData.department;
+        document.getElementById('visitorHost').textContent = visitorData.host;
+        document.getElementById('passId').textContent = visitorData.passId;
+        document.getElementById('visitDate').textContent = visitorData.visitDate;
+        document.getElementById('visitTime').textContent = visitorData.visitTime;
+        document.getElementById('personToMeet').textContent = visitorData.personToMeet;
+        document.getElementById('purpose').textContent = visitorData.purpose;
+        
+        const statusBadge = document.getElementById('passStatus');
+        statusBadge.textContent = visitorData.status;
+        statusBadge.className = 'status-badge status-' + visitorData.status.toLowerCase();
+    });
+</script>
+
+</body>
+</html>

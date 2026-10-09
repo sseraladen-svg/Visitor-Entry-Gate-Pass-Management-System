@@ -5,31 +5,45 @@ import com.visiongate.repository.GatePassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
+
 @Service
 public class GatePassService {
     
     @Autowired
     private GatePassRepository gatePassRepository;
     
-    public GatePassEntity createPass(String visitorName, String purpose) {
+    public GatePassEntity createPass(Long visitorId, String visitorName, String visitorEmail, 
+                                     String visitorPhone, String hostName, String hostEmail, 
+                                     String purpose, String visitDate, String visitTime) {
         long passCount = gatePassRepository.count();
         String passId = "PASS" + (passCount + 1);
         
         GatePassEntity pass = new GatePassEntity(
                 passId,
+                visitorId,
                 visitorName,
+                visitorEmail,
+                visitorPhone,
+                hostName,
+                hostEmail,
                 purpose,
-                "ACTIVE"
+                visitDate,
+                visitTime
         );
         
         return gatePassRepository.save(pass);
     }
     
     public GatePassEntity verifyPass(String passId) {
-        return gatePassRepository.findByPassId(passId);
+        Optional<GatePassEntity> pass = gatePassRepository.findByPassId(passId);
+        return pass.orElse(null);
     }
     
     public GatePassEntity findByPassId(String passId) {
-        return gatePassRepository.findByPassId(passId);
+        Optional<GatePassEntity> pass = gatePassRepository.findByPassId(passId);
+        return pass.orElse(null);
     }
 }

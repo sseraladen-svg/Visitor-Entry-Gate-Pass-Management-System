@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Registration - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-section {
+            margin-bottom: 32px;
+        }
+
+        .form-section h3 {
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-black);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="page-centered">
+
+<div class="card card-lg" style="max-width: 800px; width: 100%;">
+    <div style="text-align: center; margin-bottom: 32px;">
+        <h1 style="font-size: 28px; margin-bottom: 8px;">VISITOR GATE PASS</h1>
+        <h2 style="font-size: 24px; color: var(--grey-600); margin-bottom: 0;">MANAGEMENT SYSTEM</h2>
+    </div>
+
+    <div class="divider-sm"></div>
+
+    <h3 style="text-align: center; margin-bottom: 24px;">Visitor Registration</h3>
+
+    <div id="successMessage" class="success-message" style="display: none;"></div>
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+    <form id="registrationForm">
+        <!-- Personal Information -->
+        <div class="form-section">
+            <h3>Personal Information</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company Name *</label>
+                    <input type="text" id="company" name="company" required placeholder="Enter your company name">
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" name="department" placeholder="Enter your department (optional)">
+                </div>
+
+                <div class="form-group">
+                    <label for="idProofType">ID Proof Type</label>
+                    <select id="idProofType" name="idProofType">
+                        <option value="">Select ID Proof</option>
+                        <option value="PASSPORT">Passport</option>
+                        <option value="DRIVING_LICENSE">Driving License</option>
+                        <option value="AADHAAR">Aadhaar Card</option>
+                        <option value="PAN">PAN Card</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="idProofNumber">ID Proof Number</label>
+                    <input type="text" id="idProofNumber" name="idProofNumber" placeholder="Enter ID proof number">
+                </div>
+            </div>
+        </div>
+
+        <!-- Visit Information -->
+        <div class="form-section">
+            <h3>Visit Information</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="hostName">Person to Meet *</label>
+                    <input type="text" id="hostName" name="hostName" required placeholder="Enter the name of the person you're meeting">
+                </div>
+
+                <div class="form-group">
+                    <label for="hostEmail">Host Email *</label>
+                    <input type="email" id="hostEmail" name="hostEmail" required placeholder="Enter host email address">
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose">Purpose of Visit *</label>
+                    <input type="text" id="purpose" name="purpose" required placeholder="e.g., Business Meeting, Interview, Delivery">
+                </div>
+
+                <div class="form-group">
+                    <label for="visitDate">Visit Date *</label>
+                    <input type="date" id="visitDate" name="visitDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="visitTime">Visit Time *</label>
+                    <input type="time" id="visitTime" name="visitTime" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicle Information -->
+        <div class="form-section">
+            <h3>Vehicle Information (Optional)</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="vehicleNumber">Vehicle Number</label>
+                    <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="e.g., MH 01 AB 1234">
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select id="vehicleType" name="vehicleType">
+                        <option value="">Select Vehicle Type</option>
+                        <option value="CAR">Car</option>
+                        <option value="BIKE">Bike</option>
+                        <option value="TRUCK">Truck</option>
+                        <option value="VAN">Van</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicleModel">Vehicle Model</label>
+                    <input type="text" id="vehicleModel" name="vehicleModel" placeholder="e.g., Honda City">
+                </div>
+
+                <div class="form-group">
+                    <label for="vehicleColor">Vehicle Color</label>
+                    <input type="text" id="vehicleColor" name="vehicleColor" placeholder="e.g., White">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg">REGISTER</button>
+    </form>
+
+    <div class="section-separator">
+        <p style="text-align: center; color: var(--grey-600); margin-bottom: 16px;">Already registered?</p>
+        <a href="login.html" class="btn btn-secondary btn-block btn-lg">LOGIN</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            company: document.getElementById('company').value,
+            department: document.getElementById('department').value,
+            idProofType: document.getElementById('idProofType').value,
+            idProofNumber: document.getElementById('idProofNumber').value,
+            hostName: document.getElementById('hostName').value,
+            hostEmail: document.getElementById('hostEmail').value,
+            purpose: document.getElementById('purpose').value,
+            visitDate: document.getElementById('visitDate').value,
+            visitTime: document.getElementById('visitTime').value,
+            vehicleNumber: document.getElementById('vehicleNumber').value,
+            vehicleType: document.getElementById('vehicleType').value,
+            vehicleModel: document.getElementById('vehicleModel').value,
+            vehicleColor: document.getElementById('vehicleColor').value
+        };
+
+        const successDiv = document.getElementById('successMessage');
+        const errorDiv = document.getElementById('errorMessage');
+
+        // TODO: Replace with actual API call
+        if (formData.fullName && formData.email && formData.phone) {
+            successDiv.textContent = 'Registration successful! A password reset link has been sent to your email address. Please check your inbox and set your password to complete registration.';
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+            
+            document.getElementById('registrationForm').reset();
+        } else {
+            errorDiv.textContent = 'Please fill in all required fields.';
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+        }
+    });
+
+    // Set default date to today
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('visitDate').value = today;
+    });
+</script>
+
+</body>
+</html>

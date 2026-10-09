@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--primary-white);
+            border: 2px solid var(--primary-black);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary-black);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--grey-600);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--grey-200);
+        }
+
+        .data-table th {
+            background: var(--grey-100);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            font-size: 14px;
+        }
+
+        .report-filters {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid,
+            .report-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">REPORTS & ANALYTICS</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="admin-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">System Reports</h2>
+            <p>View visitor statistics and analytics.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">1,234</div>
+                <div class="stat-label">Total Visitors (Month)</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">156</div>
+                <div class="stat-label">Today's Visitors</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">89%</div>
+                <div class="stat-label">Approval Rate</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-number">45</div>
+                <div class="stat-label">Avg. Daily Visitors</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom: 24px;">Generate Custom Report</h3>
+            
+            <div class="report-filters">
+                <div class="form-group">
+                    <label for="reportType">Report Type</label>
+                    <select id="reportType">
+                        <option value="daily">Daily Report</option>
+                        <option value="weekly">Weekly Report</option>
+                        <option value="monthly">Monthly Report</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" id="startDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="date" id="endDate">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="generateReport()">GENERATE REPORT</button>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+            <h3 style="margin-bottom: 24px;">Visitor Statistics by Company</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Total Visits</th>
+                        <th>This Month</th>
+                        <th>Avg. Duration</th>
+                        <th>Approval Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Acme Corporation</td>
+                        <td>234</td>
+                        <td>45</td>
+                        <td>2h 15m</td>
+                        <td>95%</td>
+                    </tr>
+                    <tr>
+                        <td>Tech Solutions</td>
+                        <td>189</td>
+                        <td>32</td>
+                        <td>1h 45m</td>
+                        <td>92%</td>
+                    </tr>
+                    <tr>
+                        <td>Global Corp</td>
+                        <td>156</td>
+                        <td>28</td>
+                        <td>3h 00m</td>
+                        <td>88%</td>
+                    </tr>
+                    <tr>
+                        <td>Innovate Inc</td>
+                        <td>123</td>
+                        <td>21</td>
+                        <td>2h 30m</td>
+                        <td>90%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+            <h3 style="margin-bottom: 24px;">Peak Hours Analysis</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Time Slot</th>
+                        <th>Avg. Visitors</th>
+                        <th>Peak Day</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>9:00 AM - 11:00 AM</td>
+                        <td>35</td>
+                        <td>Monday</td>
+                        <td>↑ Increasing</td>
+                    </tr>
+                    <tr>
+                        <td>11:00 AM - 1:00 PM</td>
+                        <td>28</td>
+                        <td>Wednesday</td>
+                        <td>→ Stable</td>
+                    </tr>
+                    <tr>
+                        <td>2:00 PM - 4:00 PM</td>
+                        <td>42</td>
+                        <td>Friday</td>
+                        <td>↑ Increasing</td>
+                    </tr>
+                    <tr>
+                        <td>4:00 PM - 6:00 PM</td>
+                        <td>15</td>
+                        <td>Thursday</td>
+                        <td>↓ Decreasing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function generateReport() {
+        alert('Generating report...');
+        // TODO: Call backend API to generate report
+    }
+</script>
+
+</body>
+</html>

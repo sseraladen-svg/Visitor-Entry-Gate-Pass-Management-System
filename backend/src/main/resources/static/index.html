@@ -3,171 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Gate - Home</title>
+    <title>Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .navbar {
-            background: white;
-            padding: 15px 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #667eea;
-        }
-        
-        .hero {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 60px 40px;
+        .hero-section {
+            background: var(--primary-white);
+            border: 2px solid var(--primary-black);
+            border-radius: 12px;
+            padding: 64px 48px;
+            margin-bottom: 32px;
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
         }
-        
-        .hero h1 {
-            color: #333;
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        
-        .hero p {
-            color: #666;
-            font-size: 18px;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .cta-button {
+
+        .hero-badge {
             display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 10px;
+            background: var(--primary-black);
+            color: var(--primary-white);
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
         }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
         }
-        
-        .features {
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--grey-600);
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: var(--grey-500);
+            max-width: 500px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 40px auto;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
         }
-        
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
+
+        .feature-box {
+            background: var(--primary-white);
+            border: 2px solid var(--primary-black);
+            border-radius: 12px;
+            padding: 32px 24px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
+
+        .feature-box:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
-        
+
         .feature-icon {
             font-size: 48px;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
-        
-        .feature-card h3 {
-            color: #333;
-            margin-bottom: 10px;
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-black);
         }
-        
-        .feature-card p {
-            color: #666;
+
+        .feature-text {
             font-size: 14px;
+            color: var(--grey-600);
             line-height: 1.5;
+        }
+
+        .action-section {
+            background: var(--primary-white);
+            border: 2px solid var(--primary-black);
+            border-radius: 12px;
+            padding: 48px;
+        }
+
+        .action-section h3 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .action-cards.grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .action-card {
+            background: var(--grey-100);
+            border: 2px solid var(--grey-300);
+            border-radius: 10px;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-card:hover {
+            border-color: var(--primary-black);
+            background: var(--primary-white);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-black);
+        }
+
+        .action-card p {
+            font-size: 14px;
+            color: var(--grey-600);
+            margin-bottom: 0;
+        }
+
+        .footer-info {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--grey-300);
+        }
+
+        .footer-info p {
+            font-size: 13px;
+            color: var(--grey-500);
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 40px 24px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+            }
+
+            .features-grid,
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+<body class="page-centered" style="background: var(--grey-100);">
 
-<body>
+<div style="max-width: 800px; width: 100%; padding: 32px 24px;">
 
-<div class="navbar">
-    <div class="navbar-brand">🚪 Vision Gate</div>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="create-pass.html">Create Pass</a>
-        <a href="verify-pass.html">Verify Pass</a>
-    </div>
-</div>
+    <div class="action-section">
+        <h3 style="margin-bottom: 32px;">Visitor Gate Pass Management System</h3>
+        <div class="action-cards" style="grid-template-columns: repeat(3, 1fr); max-width: 800px; margin: 0 auto;">
+            <div class="action-card" onclick="window.location.href='login.html'">
+                <div style="font-size: 48px; margin-bottom: 20px;">🔐</div>
+                <h4>Login</h4>
+                <p>Access your account</p>
+            </div>
+            
+            <div class="action-card" onclick="window.location.href='register.html'">
+                <div style="font-size: 48px; margin-bottom: 20px;">📝</div>
+                <h4>Register</h4>
+                <p>New visitor registration</p>
+            </div>
 
-<div class="hero">
-    <h1>Welcome to Vision Gate</h1>
-    <p>Secure Visitor Management System for efficient gate pass operations</p>
-    <div>
-        <a href="create-pass.html" class="cta-button">Create Pass</a>
+            <div class="action-card" onclick="window.location.href='appointment.html'">
+                <div style="font-size: 48px; margin-bottom: 20px;">📅</div>
+                <h4>Book Appointment</h4>
+                <p>Schedule your visit</p>
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="features">
-    <div class="feature-card">
-        <div class="feature-icon">🔐</div>
-        <h3>Secure Authentication</h3>
-        <p>Admin-only access with secure login credentials</p>
+    <div class="footer-info">
+        <p>© 2026 Visitor Gate Pass Management System</p>
     </div>
-    
-    <div class="feature-card">
-        <div class="feature-icon">📝</div>
-        <h3>Easy Pass Creation</h3>
-        <p>Simple interface to create visitor gate passes</p>
-    </div>
-    
-    <div class="feature-card">
-        <div class="feature-icon">✅</div>
-        <h3>Instant Verification</h3>
-        <p>Quick pass validation with real-time status</p>
-    </div>
+
 </div>
 
 </body>

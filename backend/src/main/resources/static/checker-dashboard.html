@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checker Dashboard - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">CHECKER DASHBOARD</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="#" class="btn btn-secondary btn-sm">Help</a>
+            <a href="checker-login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Security Checkpoint</h2>
+            <p>Verify visitor passes and manage entry/exit operations.</p>
+        </div>
+
+        <div class="grid grid-2" style="margin-bottom: 32px;">
+            <div class="card">
+                <h3 style="margin-bottom: 24px;">Verification Tools</h3>
+                
+                <div class="action-grid">
+                    <div class="action-card" onclick="scanQRCode()">
+                        <h4>Scan QR Code</h4>
+                        <p>Scan visitor QR code</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="searchPassId()">
+                        <h4>Search Pass ID</h4>
+                        <p>Find by pass ID</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="verifyVisitor()">
+                        <h4>Verify Visitor</h4>
+                        <p>Check visitor details</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 24px;">Quick Actions</h3>
+                
+                <div class="action-grid">
+                    <div class="action-card" onclick="allowEntry()">
+                        <h4>Allow Entry</h4>
+                        <p>Grant access</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="rejectEntry()">
+                        <h4>Reject Entry</h4>
+                        <p>Deny access</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="markExit()">
+                        <h4>Mark Exit</h4>
+                        <p>Record departure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="visitorCard" style="display: none;">
+            <div class="grid grid-2">
+                <div>
+                    <div class="visitor-photo">
+                        <span>👤</span>
+                    </div>
+                    <h3 style="margin-bottom: 16px;" id="cardVisitorName">John Doe</h3>
+                </div>
+                <div>
+                    <div class="info-row">
+                        <span class="info-label">Pass ID</span>
+                        <span class="info-value" id="cardPassId">PASS12345</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value" id="cardPhone">+1 234 567 8900</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Person to Meet</span>
+                        <span class="info-value" id="cardPersonToMeet">Jane Smith</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Purpose</span>
+                        <span class="info-value" id="cardPurpose">Business Meeting</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Visit Date/Time</span>
+                        <span class="info-value" id="cardVisitDateTime">October 8, 2026 - 10:00 AM</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Pass Status</span>
+                        <span class="status-badge status-approved" id="cardPassStatus">APPROVED</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="flex gap-4">
+                <button class="btn btn-primary btn-block" onclick="allowEntry()">ALLOW ENTRY</button>
+                <button class="btn btn-secondary btn-block" onclick="rejectEntry()">REJECT ENTRY</button>
+                <button class="btn btn-secondary btn-block" onclick="markExit()">MARK EXIT</button>
+            </div>
+        </div>
+
+        <div class="card" id="searchCard" style="display: none; margin-top: 24px;">
+            <h3 style="margin-bottom: 24px;">Search Pass ID</h3>
+            
+            <div class="form-group">
+                <label for="searchPassId">Enter Pass ID</label>
+                <input type="text" id="searchPassId" placeholder="e.g., PASS12345">
+            </div>
+            
+            <button class="btn btn-primary btn-block" onclick="searchPass()">SEARCH</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // TODO: Replace with actual API calls
+    function scanQRCode() {
+        alert('Scan QR Code feature - Would open camera to scan visitor QR code');
+    }
+
+    function searchPassId() {
+        document.getElementById('searchCard').style.display = 'block';
+        document.getElementById('searchPassId').focus();
+    }
+
+    function searchPass() {
+        const passId = document.getElementById('searchPassId').value;
+        if (passId) {
+            // Simulate finding the pass
+            showVisitorCard({
+                name: 'John Doe',
+                passId: passId,
+                phone: '+1 234 567 8900',
+                personToMeet: 'Jane Smith',
+                purpose: 'Business Meeting',
+                visitDateTime: 'October 8, 2026 - 10:00 AM',
+                status: 'APPROVED'
+            });
+        } else {
+            alert('Please enter a Pass ID');
+        }
+    }
+
+    function verifyVisitor() {
+        // Simulate visitor verification
+        showVisitorCard({
+            name: 'John Doe',
+            passId: 'PASS12345',
+            phone: '+1 234 567 8900',
+            personToMeet: 'Jane Smith',
+            purpose: 'Business Meeting',
+            visitDateTime: 'October 8, 2026 - 10:00 AM',
+            status: 'APPROVED'
+        });
+    }
+
+    function showVisitorCard(visitorData) {
+        document.getElementById('visitorCard').style.display = 'block';
+        document.getElementById('cardVisitorName').textContent = visitorData.name;
+        document.getElementById('cardPassId').textContent = visitorData.passId;
+        document.getElementById('cardPhone').textContent = visitorData.phone;
+        document.getElementById('cardPersonToMeet').textContent = visitorData.personToMeet;
+        document.getElementById('cardPurpose').textContent = visitorData.purpose;
+        document.getElementById('cardVisitDateTime').textContent = visitorData.visitDateTime;
+        
+        const statusBadge = document.getElementById('cardPassStatus');
+        statusBadge.textContent = visitorData.status;
+        statusBadge.className = 'status-badge status-' + visitorData.status.toLowerCase();
+    }
+
+    function allowEntry() {
+        alert('Entry allowed - Visitor marked as INSIDE');
+        // Update status to INSIDE
+        const statusBadge = document.getElementById('cardPassStatus');
+        statusBadge.textContent = 'INSIDE';
+        statusBadge.className = 'status-badge status-inside';
+    }
+
+    function rejectEntry() {
+        if (confirm('Are you sure you want to reject this visitor?')) {
+            alert('Entry rejected - Visitor marked as REJECTED');
+            // Update status to REJECTED
+            const statusBadge = document.getElementById('cardPassStatus');
+            statusBadge.textContent = 'REJECTED';
+            statusBadge.className = 'status-badge status-rejected';
+        }
+    }
+
+    function markExit() {
+        alert('Exit marked - Visitor marked as EXITED');
+        // Update status to EXITED
+        const statusBadge = document.getElementById('cardPassStatus');
+        statusBadge.textContent = 'EXITED';
+        statusBadge.className = 'status-badge status-exited';
+    }
+</script>
+
+</body>
+</html>

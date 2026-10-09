@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Approval - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--grey-200);
+        }
+
+        .data-table th {
+            background: var(--grey-100);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-buttons button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">HOST APPROVAL</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="admin-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Pending Approvals</h2>
+            <p>Review and approve visitor appointment requests.</p>
+        </div>
+
+        <div class="card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Visitor</th>
+                        <th>Company</th>
+                        <th>Purpose</th>
+                        <th>Date/Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentList">
+                    <tr>
+                        <td>John Doe<br><small>john.doe@example.com</small></td>
+                        <td>Acme Corporation</td>
+                        <td>Business Meeting</td>
+                        <td>Oct 9, 2026 - 10:00 AM</td>
+                        <td><span class="status-badge status-pending">PENDING</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="approveAppointment(1)">Approve</button>
+                                <button class="btn btn-secondary" onclick="rejectAppointment(1)">Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith<br><small>jane.smith@example.com</small></td>
+                        <td>Tech Solutions</td>
+                        <td>Interview</td>
+                        <td>Oct 9, 2026 - 2:00 PM</td>
+                        <td><span class="status-badge status-pending">PENDING</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" onclick="approveAppointment(2)">Approve</button>
+                                <button class="btn btn-secondary" onclick="rejectAppointment(2)">Reject</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function approveAppointment(id) {
+        if (confirm('Are you sure you want to approve this appointment?')) {
+            alert('Appointment approved! Gate pass will be generated.');
+            // TODO: Call backend API to approve
+        }
+    }
+
+    function rejectAppointment(id) {
+        const reason = prompt('Please enter rejection reason:');
+        if (reason) {
+            alert('Appointment rejected. Visitor will be notified.');
+            // TODO: Call backend API to reject
+        }
+    }
+</script>
+
+</body>
+</html>

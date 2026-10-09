@@ -3,199 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Gate - Login</title>
+    <title>Login - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+        .login-tabs {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            gap: 0;
+            margin-bottom: 32px;
+            border: 2px solid var(--primary-black);
+            border-radius: 8px;
+            overflow: hidden;
         }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            max-width: 450px;
-            width: 100%;
-        }
-        
-        .header {
+
+        .login-tab {
+            flex: 1;
+            padding: 16px;
             text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 36px;
-            font-weight: bold;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-        
-        input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            background: var(--grey-100);
+            border: none;
             transition: all 0.3s ease;
-            margin-top: 10px;
         }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+
+        .login-tab.active {
+            background: var(--primary-black);
+            color: var(--primary-white);
         }
-        
-        .message {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 14px;
+
+        .login-tab:hover:not(.active) {
+            background: var(--grey-200);
         }
-        
-        .error {
-            background-color: #fee;
-            color: #c33;
-            border: 1px solid #fcc;
+
+        .login-form {
+            display: none;
         }
-        
-        .credentials {
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .credentials h3 {
-            color: #333;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        
-        .credentials p {
-            color: #666;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
-            color: #999;
-            font-size: 12px;
+
+        .login-form.active {
+            display: block;
         }
     </style>
 </head>
+<body class="page-centered">
 
-<body>
-
-<div class="container">
-    <div class="logo">VG</div>
-    
-    <div class="header">
-        <h1>Vision Entry Gate Pass</h1>
-        <p>Secure Visitor Management System</p>
+<div class="card card-lg login-card">
+    <div style="text-align: center; margin-bottom: 32px;">
+        <h1 style="font-size: 28px; margin-bottom: 8px;">VISITOR GATE PASS</h1>
+        <h2 style="font-size: 24px; color: var(--grey-600); margin-bottom: 0;">MANAGEMENT SYSTEM</h2>
     </div>
 
-    <div id="errorMessage" class="message error" style="display: none;">
-        Invalid username or password. Please try again.
+    <div class="divider-sm"></div>
+
+    <div class="login-tabs">
+        <button class="login-tab active" onclick="showTab('visitor')">VISITOR</button>
+        <button class="login-tab" onclick="showTab('security')">SECURITY</button>
+        <button class="login-tab" onclick="showTab('admin')">ADMIN</button>
     </div>
 
-    <form action="/login" method="post">
+    <!-- Visitor Login Form -->
+    <div id="visitorForm" class="login-form active">
+        <div id="visitorErrorMessage" class="error-message" style="display: none;"></div>
 
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required placeholder="Enter your username">
-        </div>
+        <form id="visitorLoginForm" action="/visitor-login" method="post">
+            <div class="form-group">
+                <label for="visitorEmail">Email Address</label>
+                <input type="email" id="visitorEmail" name="email" required placeholder="Enter your email address">
+            </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required placeholder="Enter your password">
-        </div>
+            <div class="form-group">
+                <label for="visitorPassword">Password</label>
+                <div class="password-group">
+                    <input type="password" id="visitorPassword" name="password" required placeholder="Enter your password">
+                    <button type="button" class="password-toggle" onclick="togglePassword('visitorPassword', this)">👁</button>
+                </div>
+            </div>
 
-        <button type="submit">Login to System</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <a href="forgot-password.html" class="link">Forgot Password?</a>
+            </div>
 
-    </form>
-
-    <div class="credentials">
-        <h3>🔐 Test Credentials</h3>
-        <p><strong>Username:</strong> admin<br>
-        <strong>Password:</strong> admin123</p>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">LOGIN</button>
+        </form>
     </div>
-    
-    <div class="footer">
-        © 2024 Vision Gate System. All rights reserved.
+
+    <!-- Security Login Form -->
+    <div id="securityForm" class="login-form">
+        <div id="securityErrorMessage" class="error-message" style="display: none;"></div>
+
+        <form id="securityLoginForm" action="/security-login" method="post">
+            <div class="form-group">
+                <label for="securityId">Security ID / Email</label>
+                <input type="text" id="securityId" name="securityId" required placeholder="Enter your security ID or email">
+            </div>
+
+            <div class="form-group">
+                <label for="securityPassword">Password</label>
+                <div class="password-group">
+                    <input type="password" id="securityPassword" name="password" required placeholder="Enter your password">
+                    <button type="button" class="password-toggle" onclick="togglePassword('securityPassword', this)">👁</button>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <a href="forgot-password.html" class="link">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">LOGIN</button>
+        </form>
+    </div>
+
+    <!-- Admin Login Form -->
+    <div id="adminForm" class="login-form">
+        <div id="adminErrorMessage" class="error-message" style="display: none;"></div>
+
+        <form id="adminLoginForm" action="/admin-login" method="post">
+            <div class="form-group">
+                <label for="adminEmail">Admin Email</label>
+                <input type="email" id="adminEmail" name="email" required placeholder="Enter your admin email">
+            </div>
+
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <div class="password-group">
+                    <input type="password" id="adminPassword" name="password" required placeholder="Enter your password">
+                    <button type="button" class="password-toggle" onclick="togglePassword('adminPassword', this)">👁</button>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <a href="forgot-password.html" class="link">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">LOGIN</button>
+        </form>
+    </div>
+
+    <div class="section-separator">
+        <p style="text-align: center; color: var(--grey-600); margin-bottom: 16px;">New visitor?</p>
+        <a href="register.html" class="btn btn-secondary btn-block btn-lg">REGISTER NOW</a>
     </div>
 </div>
 
 <script>
+    function togglePassword(inputId, button) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            button.textContent = '🔒';
+        } else {
+            input.type = 'password';
+            button.textContent = '👁';
+        }
+    }
+
+    function showTab(tab) {
+        // Hide all forms
+        document.getElementById('visitorForm').classList.remove('active');
+        document.getElementById('securityForm').classList.remove('active');
+        document.getElementById('adminForm').classList.remove('active');
+        
+        // Remove active class from all tabs
+        document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+        
+        // Show selected form and activate tab
+        if (tab === 'visitor') {
+            document.getElementById('visitorForm').classList.add('active');
+            document.querySelectorAll('.login-tab')[0].classList.add('active');
+        } else if (tab === 'security') {
+            document.getElementById('securityForm').classList.add('active');
+            document.querySelectorAll('.login-tab')[1].classList.add('active');
+        } else {
+            document.getElementById('adminForm').classList.add('active');
+            document.querySelectorAll('.login-tab')[2].classList.add('active');
+        }
+    }
+
+    document.getElementById('visitorLoginForm').addEventListener('submit', function(e) {
+        const email = document.getElementById('visitorEmail').value;
+        const password = document.getElementById('visitorPassword').value;
+        const errorDiv = document.getElementById('visitorErrorMessage');
+        
+        if (!email || !password) {
+            e.preventDefault();
+            errorDiv.textContent = 'Please enter both email and password.';
+            errorDiv.style.display = 'block';
+        }
+        // If valid, let the form submit to backend
+    });
+
+    document.getElementById('securityLoginForm').addEventListener('submit', function(e) {
+        const securityId = document.getElementById('securityId').value;
+        const password = document.getElementById('securityPassword').value;
+        const errorDiv = document.getElementById('securityErrorMessage');
+        
+        if (!securityId || !password) {
+            e.preventDefault();
+            errorDiv.textContent = 'Please enter both security ID and password.';
+            errorDiv.style.display = 'block';
+        }
+        // If valid, let the form submit to backend
+    });
+
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        const email = document.getElementById('adminEmail').value;
+        const password = document.getElementById('adminPassword').value;
+        const errorDiv = document.getElementById('adminErrorMessage');
+        
+        if (!email || !password) {
+            e.preventDefault();
+            errorDiv.textContent = 'Please enter both email and password.';
+            errorDiv.style.display = 'block';
+        }
+        // If valid, let the form submit to backend
+    });
+
+    // Check for error in URL
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('error') === 'true') {
-        document.getElementById('errorMessage').style.display = 'block';
+        const errorDiv = document.getElementById('visitorErrorMessage');
+        errorDiv.textContent = urlParams.get('message') || 'Invalid email or password. Please try again.';
+        errorDiv.style.display = 'block';
     }
 </script>
 

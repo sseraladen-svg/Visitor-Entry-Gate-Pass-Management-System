@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Visitor - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">SEARCH VISITOR</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="security-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Find Visitor</h2>
+            <p>Search for visitors by pass ID, name, or phone number.</p>
+        </div>
+
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="searchQuery">Search by Pass ID, Name, or Phone</label>
+                    <input type="text" id="searchQuery" name="searchQuery" required placeholder="Enter pass ID, visitor name, or phone number">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">SEARCH</button>
+            </form>
+        </div>
+
+        <div class="card" id="searchResult" style="display: none; margin-top: 32px;">
+            <h3 style="margin-bottom: 24px;">Search Result</h3>
+            
+            <div class="visitor-card">
+                <div class="grid grid-2">
+                    <div>
+                        <div class="visitor-photo">
+                            <span>👤</span>
+                        </div>
+                        <h3 style="margin-bottom: 16px;" id="resultName">John Doe</h3>
+                    </div>
+                    <div>
+                        <div class="info-row">
+                            <span class="info-label">Pass ID</span>
+                            <span class="info-value" id="resultPassId">PASS12345</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Phone</span>
+                            <span class="info-value" id="resultPhone">+1 234 567 8900</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Company</span>
+                            <span class="info-value" id="resultCompany">Acme Corporation</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Purpose</span>
+                            <span class="info-value" id="resultPurpose">Business Meeting</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Visit Date/Time</span>
+                            <span class="info-value" id="resultVisitDateTime">October 9, 2026 - 10:00 AM</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Pass Status</span>
+                            <span class="status-badge status-approved" id="resultStatus">APPROVED</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="flex gap-4">
+                    <button class="btn btn-primary btn-block" onclick="allowEntry()">ALLOW ENTRY</button>
+                    <button class="btn btn-secondary btn-block" onclick="viewDetails()">VIEW DETAILS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const query = document.getElementById('searchQuery').value;
+        
+        // TODO: Call backend API to search
+        // Simulate visitor found
+        document.getElementById('searchResult').style.display = 'block';
+        document.getElementById('resultPassId').textContent = query.startsWith('PASS') ? query : 'PASS12345';
+    });
+
+    function allowEntry() {
+        alert('Entry allowed!');
+        window.location.href = 'security-dashboard.html';
+    }
+
+    function viewDetails() {
+        alert('View full visitor details');
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Management - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--grey-200);
+        }
+
+        .data-table th {
+            background: var(--grey-100);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">VEHICLE MANAGEMENT</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="security-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Track Visitor Vehicles</h2>
+            <p>Monitor parked vehicles and manage exits.</p>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom: 24px;">Currently Parked Vehicles</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Vehicle Number</th>
+                        <th>Type</th>
+                        <th>Model</th>
+                        <th>Color</th>
+                        <th>Visitor</th>
+                        <th>Entry Time</th>
+                        <th>Slot</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MH 01 AB 1234</td>
+                        <td>Car</td>
+                        <td>Honda City</td>
+                        <td>White</td>
+                        <td>John Doe</td>
+                        <td>10:30 AM</td>
+                        <td>A-12</td>
+                        <td><span class="status-badge status-inside">PARKED</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-secondary" onclick="markExit(1)">Mark Exit</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>MH 02 CD 5678</td>
+                        <td>Bike</td>
+                        <td>Royal Enfield</td>
+                        <td>Black</td>
+                        <td>Jane Smith</td>
+                        <td>09:15 AM</td>
+                        <td>B-05</td>
+                        <td><span class="status-badge status-inside">PARKED</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-secondary" onclick="markExit(2)">Mark Exit</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>MH 03 EF 9012</td>
+                        <td>Car</td>
+                        <td>Toyota Camry</td>
+                        <td>Silver</td>
+                        <td>Bob Johnson</td>
+                        <td>08:45 AM</td>
+                        <td>A-08</td>
+                        <td><span class="status-badge status-inside">PARKED</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-secondary" onclick="markExit(3)">Mark Exit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+            <h3 style="margin-bottom: 24px;">Vehicle Exit History</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Vehicle Number</th>
+                        <th>Type</th>
+                        <th>Visitor</th>
+                        <th>Entry Time</th>
+                        <th>Exit Time</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MH 04 GH 3456</td>
+                        <td>Van</td>
+                        <td>Alice Williams</td>
+                        <td>Yesterday 2:00 PM</td>
+                        <td>Yesterday 4:30 PM</td>
+                        <td>2h 30m</td>
+                    </tr>
+                    <tr>
+                        <td>MH 05 IJ 7890</td>
+                        <td>Car</td>
+                        <td>Charlie Brown</td>
+                        <td>Yesterday 10:00 AM</td>
+                        <td>Yesterday 6:00 PM</td>
+                        <td>8h 00m</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function markExit(id) {
+        if (confirm('Mark this vehicle as exited?')) {
+            alert('Vehicle exit recorded successfully!');
+            // TODO: Call backend API
+        }
+    }
+</script>
+
+</body>
+</html>

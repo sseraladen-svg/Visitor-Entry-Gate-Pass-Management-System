@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Verification - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .qr-scanner {
+            background: var(--primary-white);
+            border: 2px solid var(--primary-black);
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .qr-placeholder {
+            width: 300px;
+            height: 300px;
+            background: var(--grey-100);
+            border: 2px dashed var(--grey-400);
+            border-radius: 12px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .scan-line {
+            height: 2px;
+            background: var(--primary-black);
+            animation: scan 2s infinite;
+            margin: 16px 0;
+        }
+
+        @keyframes scan {
+            0%, 100% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(280px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">QR VERIFICATION</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="security-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Scan Visitor QR Code</h2>
+            <p>Position the QR code within the frame to verify visitor identity.</p>
+        </div>
+
+        <div class="qr-scanner">
+            <div class="qr-placeholder">
+                <span>📱</span>
+            </div>
+            <div class="scan-line"></div>
+            <p style="margin-bottom: 16px;">Point camera at QR code</p>
+            <button class="btn btn-primary btn-lg" onclick="startScan()">START SCANNING</button>
+        </div>
+
+        <div class="card" id="visitorResult" style="display: none;">
+            <h3 style="margin-bottom: 24px;">Visitor Verified</h3>
+            
+            <div class="grid grid-2">
+                <div>
+                    <div class="visitor-photo">
+                        <span>👤</span>
+                    </div>
+                    <h3 style="margin-bottom: 16px;" id="resultVisitorName">John Doe</h3>
+                </div>
+                <div>
+                    <div class="info-row">
+                        <span class="info-label">Pass ID</span>
+                        <span class="info-value" id="resultPassId">PASS12345</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value" id="resultPhone">+1 234 567 8900</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Purpose</span>
+                        <span class="info-value" id="resultPurpose">Business Meeting</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Visit Date/Time</span>
+                        <span class="info-value" id="resultVisitDateTime">October 9, 2026 - 10:00 AM</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Pass Status</span>
+                        <span class="status-badge status-approved" id="resultStatus">APPROVED</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="flex gap-4">
+                <button class="btn btn-primary btn-block" onclick="allowEntry()">ALLOW ENTRY</button>
+                <button class="btn btn-secondary btn-block" onclick="rejectEntry()">REJECT ENTRY</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function startScan() {
+        alert('Camera activated - Scanning QR code...');
+        // Simulate successful scan after 2 seconds
+        setTimeout(() => {
+            document.getElementById('visitorResult').style.display = 'block';
+        }, 2000);
+    }
+
+    function allowEntry() {
+        alert('Entry allowed - Visitor marked as INSIDE');
+        window.location.href = 'security-dashboard.html';
+    }
+
+    function rejectEntry() {
+        if (confirm('Are you sure you want to reject this visitor?')) {
+            alert('Entry rejected');
+            window.location.href = 'security-dashboard.html';
+        }
+    }
+</script>
+
+</body>
+</html>

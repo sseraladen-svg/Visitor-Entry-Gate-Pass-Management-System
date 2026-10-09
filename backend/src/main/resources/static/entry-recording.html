@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Entry - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">RECORD ENTRY</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="security-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Record Visitor Entry</h2>
+            <p>Mark visitor entry time and update status.</p>
+        </div>
+
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+            <form id="entryForm">
+                <div class="form-group">
+                    <label for="passId">Pass ID *</label>
+                    <input type="text" id="passId" name="passId" required placeholder="Enter pass ID (e.g., PASS12345)">
+                </div>
+
+                <div class="form-group">
+                    <label for="entryNotes">Entry Notes</label>
+                    <textarea id="entryNotes" name="entryNotes" rows="3" placeholder="Add any notes about the entry (optional)"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">RECORD ENTRY</button>
+            </form>
+        </div>
+
+        <div class="card" id="visitorInfo" style="display: none; margin-top: 32px;">
+            <h3 style="margin-bottom: 24px;">Visitor Information</h3>
+            
+            <div class="info-row">
+                <span class="info-label">Visitor Name</span>
+                <span class="info-value" id="infoVisitorName">John Doe</span>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">Pass ID</span>
+                <span class="info-value" id="infoPassId">PASS12345</span>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">Purpose</span>
+                <span class="info-value" id="infoPurpose">Business Meeting</span>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">Current Status</span>
+                <span class="status-badge status-approved" id="infoStatus">APPROVED</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <button class="btn btn-primary btn-block" onclick="confirmEntry()">CONFIRM ENTRY</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('entryForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const passId = document.getElementById('passId').value;
+        const notes = document.getElementById('entryNotes').value;
+        
+        // TODO: Call backend to fetch visitor info
+        // Simulate visitor found
+        document.getElementById('visitorInfo').style.display = 'block';
+        document.getElementById('infoPassId').textContent = passId;
+    });
+
+    function confirmEntry() {
+        alert('Entry recorded successfully! Visitor status updated to INSIDE.');
+        window.location.href = 'security-dashboard.html';
+    }
+</script>
+
+</body>
+</html>

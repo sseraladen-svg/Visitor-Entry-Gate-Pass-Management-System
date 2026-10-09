@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checker Login - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-centered">
+
+<div class="card card-lg login-card">
+    <div style="text-align: center; margin-bottom: 32px;">
+        <h1 style="font-size: 28px; margin-bottom: 8px;">VISITOR GATE PASS</h1>
+        <h2 style="font-size: 24px; color: var(--grey-600); margin-bottom: 0;">MANAGEMENT SYSTEM</h2>
+    </div>
+
+    <div class="divider-sm"></div>
+
+    <h3 style="text-align: center; margin-bottom: 24px;">Checker / Security Login</h3>
+
+    <div id="checkerErrorMessage" class="error-message" style="display: none;"></div>
+
+    <form id="checkerLoginForm">
+        <div class="form-group">
+            <label for="checkerId">Checker ID / Email</label>
+            <input type="text" id="checkerId" name="checkerId" required placeholder="Enter your checker ID or email">
+        </div>
+
+        <div class="form-group">
+            <label for="checkerPassword">Password</label>
+            <div class="password-group">
+                <input type="password" id="checkerPassword" name="password" required placeholder="Enter your password">
+                <button type="button" class="password-toggle" onclick="togglePassword('checkerPassword', this)">👁</button>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <a href="forgot-password.html" class="link">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg">LOGIN</button>
+    </form>
+
+    <div class="section-separator">
+        <p style="text-align: center; color: var(--grey-600); margin-bottom: 16px;">Not a security checker?</p>
+        <a href="login.html" class="btn btn-secondary btn-block btn-lg">VISITOR LOGIN</a>
+    </div>
+</div>
+
+<script>
+    function togglePassword(inputId, button) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            button.textContent = '🔒';
+        } else {
+            input.type = 'password';
+            button.textContent = '👁';
+        }
+    }
+
+    document.getElementById('checkerLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const checkerId = document.getElementById('checkerId').value;
+        const password = document.getElementById('checkerPassword').value;
+        const errorDiv = document.getElementById('checkerErrorMessage');
+        
+        // TODO: Replace with actual API call
+        // For now, simulate login
+        if (checkerId && password) {
+            // Simulate successful login
+            window.location.href = 'checker-dashboard.html';
+        } else {
+            errorDiv.textContent = 'Please enter both checker ID and password.';
+            errorDiv.style.display = 'block';
+        }
+    });
+
+    // Check for error in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error') === 'true') {
+        const errorDiv = document.getElementById('checkerErrorMessage');
+        errorDiv.textContent = urlParams.get('message') || 'Invalid checker ID or password. Please try again.';
+        errorDiv.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

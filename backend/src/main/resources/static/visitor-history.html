@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor History - Visitor Gate Pass Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--grey-200);
+        }
+
+        .data-table th {
+            background: var(--grey-100);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            font-size: 14px;
+        }
+
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-header">
+    <div class="container flex flex-between flex-center">
+        <div>
+            <h1 style="font-size: 24px; margin-bottom: 0;">VISITOR HISTORY</h1>
+        </div>
+        <div class="flex gap-4">
+            <a href="security-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-content">
+    <div class="container">
+        <div style="margin-bottom: 32px;">
+            <h2 style="margin-bottom: 8px;">Search Visitor Records</h2>
+            <p>View complete visitor history and search records.</p>
+        </div>
+
+        <div class="card">
+            <div class="search-filters">
+                <div class="form-group">
+                    <label for="searchName">Visitor Name</label>
+                    <input type="text" id="searchName" placeholder="Search by name">
+                </div>
+
+                <div class="form-group">
+                    <label for="searchPassId">Pass ID</label>
+                    <input type="text" id="searchPassId" placeholder="Search by pass ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="searchDate">Date</label>
+                    <input type="date" id="searchDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="searchStatus">Status</label>
+                    <select id="searchStatus">
+                        <option value="">All Status</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="INSIDE">Inside</option>
+                        <option value="EXITED">Exited</option>
+                        <option value="REJECTED">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="searchVisitors()">SEARCH</button>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+            <h3 style="margin-bottom: 24px;">Visitor Records</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Pass ID</th>
+                        <th>Visitor Name</th>
+                        <th>Company</th>
+                        <th>Purpose</th>
+                        <th>Visit Date</th>
+                        <th>Entry Time</th>
+                        <th>Exit Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PASS12345</td>
+                        <td>John Doe</td>
+                        <td>Acme Corporation</td>
+                        <td>Business Meeting</td>
+                        <td>Oct 9, 2026</td>
+                        <td>10:30 AM</td>
+                        <td>-</td>
+                        <td><span class="status-badge status-inside">INSIDE</span></td>
+                    </tr>
+                    <tr>
+                        <td>PASS12344</td>
+                        <td>Jane Smith</td>
+                        <td>Tech Solutions</td>
+                        <td>Interview</td>
+                        <td>Oct 9, 2026</td>
+                        <td>09:15 AM</td>
+                        <td>11:30 AM</td>
+                        <td><span class="status-badge status-exited">EXITED</span></td>
+                    </tr>
+                    <tr>
+                        <td>PASS12343</td>
+                        <td>Bob Johnson</td>
+                        <td>Global Corp</td>
+                        <td>Delivery</td>
+                        <td>Oct 8, 2026</td>
+                        <td>02:00 PM</td>
+                        <td>02:45 PM</td>
+                        <td><span class="status-badge status-exited">EXITED</span></td>
+                    </tr>
+                    <tr>
+                        <td>PASS12342</td>
+                        <td>Alice Williams</td>
+                        <td>Innovate Inc</td>
+                        <td>Training</td>
+                        <td>Oct 8, 2026</td>
+                        <td>10:00 AM</td>
+                        <td>05:00 PM</td>
+                        <td><span class="status-badge status-exited">EXITED</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function searchVisitors() {
+        alert('Searching visitor records...');
+        // TODO: Call backend API to search
+    }
+</script>
+
+</body>
+</html>
