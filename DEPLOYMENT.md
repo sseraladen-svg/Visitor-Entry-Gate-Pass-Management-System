@@ -23,6 +23,12 @@ The project is configured with Aiven Cloud MySQL. Connection details:
 - **Password:** d1b7db3a
 - **SSL Mode:** REQUIRED
 
+**Important:** Currently experiencing access denied error from IP 106.219.181.93.
+**Solution Required:**
+1. Whitelist your IP address in Aiven Cloud console
+2. Or verify the database credentials are correct
+3. Check if the database service is running
+
 To use Aiven MySQL, uncomment the MySQL configuration in `application.properties` and comment out H2.
 
 #### Option 3: Other Cloud MySQL Providers
