@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class AppointmentController {
@@ -43,34 +45,48 @@ public class AppointmentController {
         }
     }
 
-    @PostMapping("/approve-appointment")
-    public String approveAppointment(@RequestParam Long appointmentId) {
+    @PostMapping("/api/approve-appointment")
+    @ResponseBody
+    public Map<String, Object> approveAppointment(@RequestBody Map<String, Long> request) {
+        Map<String, Object> response = new HashMap<>();
+        Long appointmentId = request.get("appointmentId");
 
         System.out.println("Approving appointment: " + appointmentId);
 
         try {
             appointmentService.approveAppointment(appointmentId, "admin");
             System.out.println("Appointment approved: " + appointmentId);
-            return "redirect:/host-approval.html?success=true";
+            response.put("success", true);
+            response.put("message", "Appointment approved successfully");
         } catch (Exception e) {
             System.out.println("Approval failed: " + e.getMessage());
-            return "redirect:/host-approval.html?error=Approval failed";
+            response.put("success", false);
+            response.put("message", "Approval failed");
         }
+
+        return response;
     }
 
-    @PostMapping("/reject-appointment")
-    public String rejectAppointment(@RequestParam Long appointmentId,
-                                    @RequestParam String reason) {
+    @PostMapping("/api/reject-appointment")
+    @ResponseBody
+    public Map<String, Object> rejectAppointment(@RequestBody Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<>();
+        Long appointmentId = (Long) request.get("appointmentId");
+        String reason = (String) request.get("reason");
 
         System.out.println("Rejecting appointment: " + appointmentId);
 
         try {
             appointmentService.rejectAppointment(appointmentId, reason);
             System.out.println("Appointment rejected: " + appointmentId);
-            return "redirect:/host-approval.html?success=true";
+            response.put("success", true);
+            response.put("message", "Appointment rejected successfully");
         } catch (Exception e) {
             System.out.println("Rejection failed: " + e.getMessage());
-            return "redirect:/host-approval.html?error=Rejection failed";
+            response.put("success", false);
+            response.put("message", "Rejection failed");
         }
+
+        return response;
     }
 }

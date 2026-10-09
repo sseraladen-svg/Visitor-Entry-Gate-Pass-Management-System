@@ -17,24 +17,24 @@
     <div class="dashboard-content">
         <div class="bento-grid">
             <div class="bento-card">
-                <h3 class="mono">001</h3>
-                <div class="stat-number mono">156</div>
-                <div class="stat-label">TOTAL_VISITORS</div>
+                <h3>TOTAL_VISITORS</h3>
+                <div class="stat-number mono" id="totalVisitors">-</div>
+                <div class="stat-label">ALL_TIME</div>
             </div>
             <div class="bento-card">
-                <h3 class="mono">002</h3>
-                <div class="stat-number mono" style="color: var(--neon-green)">12</div>
-                <div class="stat-label">APPROVED</div>
+                <h3>APPROVED</h3>
+                <div class="stat-number mono" id="approvedCount" style="color: var(--neon-green)">-</div>
+                <div class="stat-label">APPOINTMENTS</div>
             </div>
             <div class="bento-card">
-                <h3 class="mono">003</h3>
-                <div class="stat-number mono" style="color: var(--neon-red)">3</div>
-                <div class="stat-label">PENDING</div>
+                <h3>PENDING</h3>
+                <div class="stat-number mono" id="pendingCount" style="color: var(--neon-red)">-</div>
+                <div class="stat-label">APPROVALS</div>
             </div>
             <div class="bento-card">
-                <h3 class="mono">004</h3>
-                <div class="stat-number mono" style="color: var(--neon-blue)">8</div>
-                <div class="stat-label">ACTIVE_NOW</div>
+                <h3>ACTIVE</h3>
+                <div class="stat-number mono" id="activeCount" style="color: var(--neon-blue)">-</div>
+                <div class="stat-label">INSIDE_BUILDING</div>
             </div>
         </div>
 
@@ -63,19 +63,54 @@
 
         <div class="bento-card" style="margin-top: 24px;">
             <h3>RECENT_ACTIVITY</h3>
-            <div class="info-row">
-                <span class="info-label">VISITOR</span>
-                <span class="info-value mono">John_Doe → IN</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">VISITOR</span>
-                <span class="info-value mono">Jane_Smith → OUT</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">APPOINTMENT</span>
-                <span class="info-value mono">Meeting_ABC → APPROVED</span>
+            <div id="recentActivity">
+                <p class="mono" style="color: var(--text-secondary);">Loading...</p>
             </div>
         </div>
     </div>
+
+    <script>
+        // Fetch live data from backend
+        async function loadDashboardData() {
+            try {
+                // Load stats
+                const statsResponse = await fetch('/api/stats');
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    document.getElementById('totalVisitors').textContent = stats.totalVisitors;
+                    document.getElementById('approvedCount').textContent = stats.approvedAppointments;
+                    document.getElementById('pendingCount').textContent = stats.pendingAppointments;
+                    document.getElementById('activeCount').textContent = stats.activeVisitors;
+                }
+
+                // Load recent activity
+                const activityResponse = await fetch('/api/recent-activity');
+                if (activityResponse.ok) {
+                    const data = await activityResponse.json();
+                    const activityDiv = document.getElementById('recentActivity');
+                    if (data.length === 0) {
+                        activityDiv.innerHTML = '<p class="mono" style="color: var(--text-secondary);">No recent activity</p>';
+                    } else {
+                        activityDiv.innerHTML = data.map(item => `
+                            <div class="info-row">
+                                <span class="info-label">${item.type}</span>
+                                <span class="info-value mono">${item.details}</span>
+                            </div>
+                        `).join('');
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+                document.getElementById('totalVisitors').textContent = '0';
+                document.getElementById('approvedCount').textContent = '0';
+                document.getElementById('pendingCount').textContent = '0';
+                document.getElementById('activeCount').textContent = '0';
+                document.getElementById('recentActivity').innerHTML = '<p class="mono" style="color: var(--text-secondary);">Failed to load data</p>';
+            }
+        }
+
+        loadDashboardData();
+        setInterval(loadDashboardData, 30000); // Refresh every 30 seconds
+    </script>
 </body>
 </html>

@@ -5,123 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Host Approval - Visitor Gate Pass Management System</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--grey-200);
-        }
-
-        .data-table th {
-            background: var(--grey-100);
-            font-weight: 700;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-
-        .data-table td {
-            font-size: 14px;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-buttons button {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-    </style>
 </head>
 <body>
 
 <div class="dashboard-header">
-    <div class="container flex flex-between flex-center">
-        <div>
-            <h1 style="font-size: 24px; margin-bottom: 0;">HOST APPROVAL</h1>
-        </div>
-        <div class="flex gap-4">
-            <a href="admin-dashboard.html" class="btn btn-secondary btn-sm">Back to Dashboard</a>
-            <a href="login.html" class="btn btn-primary btn-sm">LOGOUT</a>
-        </div>
+    <div class="flex flex-between">
+        <h1>HOST_APPROVAL</h1>
+        <a href="admin-dashboard.html" class="link">← DASHBOARD</a>
     </div>
 </div>
 
 <div class="dashboard-content">
-    <div class="container">
-        <div style="margin-bottom: 32px;">
-            <h2 style="margin-bottom: 8px;">Pending Approvals</h2>
-            <p>Review and approve visitor appointment requests.</p>
-        </div>
+    <div class="bento-card" style="margin-bottom: 24px;">
+        <h2>PENDING_APPROVALS</h2>
+        <p class="mono" style="color: var(--text-secondary);">Review and approve visitor appointment requests</p>
+    </div>
 
-        <div class="card">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Visitor</th>
-                        <th>Company</th>
-                        <th>Purpose</th>
-                        <th>Date/Time</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="appointmentList">
-                    <tr>
-                        <td>John Doe<br><small>john.doe@example.com</small></td>
-                        <td>Acme Corporation</td>
-                        <td>Business Meeting</td>
-                        <td>Oct 9, 2026 - 10:00 AM</td>
-                        <td><span class="status-badge status-pending">PENDING</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn btn-primary" onclick="approveAppointment(1)">Approve</button>
-                                <button class="btn btn-secondary" onclick="rejectAppointment(1)">Reject</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Jane Smith<br><small>jane.smith@example.com</small></td>
-                        <td>Tech Solutions</td>
-                        <td>Interview</td>
-                        <td>Oct 9, 2026 - 2:00 PM</td>
-                        <td><span class="status-badge status-pending">PENDING</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn btn-primary" onclick="approveAppointment(2)">Approve</button>
-                                <button class="btn btn-secondary" onclick="rejectAppointment(2)">Reject</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="bento-card">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>VISITOR</th>
+                    <th>PURPOSE</th>
+                    <th>DATE/TIME</th>
+                    <th>STATUS</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentList">
+                <tr>
+                    <td colspan="5" class="mono" style="text-align: center; color: var(--text-secondary);">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-    function approveAppointment(id) {
-        if (confirm('Are you sure you want to approve this appointment?')) {
-            alert('Appointment approved! Gate pass will be generated.');
-            // TODO: Call backend API to approve
+    async function loadAppointments() {
+        try {
+            const response = await fetch('/api/appointments');
+            if (response.ok) {
+                const appointments = await response.json();
+                const tbody = document.getElementById('appointmentList');
+                
+                if (appointments.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="mono" style="text-align: center; color: var(--text-secondary);">No pending appointments</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = appointments.map(apt => `
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600;">${apt.visitorName}</div>
+                            <div class="mono" style="font-size: 12px; color: var(--text-secondary);">${apt.visitorEmail}</div>
+                        </td>
+                        <td>${apt.purpose}</td>
+                        <td class="mono">${apt.appointmentDate} ${apt.appointmentTime}</td>
+                        <td><span class="status-badge status-${apt.status.toLowerCase()}">${apt.status}</span></td>
+                        <td>
+                            <div class="flex gap-2">
+                                <button class="btn btn-primary btn-sm" onclick="approveAppointment(${apt.id})">APPROVE</button>
+                                <button class="btn btn-danger btn-sm" onclick="rejectAppointment(${apt.id})">REJECT</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Failed to load appointments:', error);
+            document.getElementById('appointmentList').innerHTML = '<tr><td colspan="5" class="mono" style="text-align: center; color: var(--neon-red);">Failed to load data</td></tr>';
         }
     }
 
-    function rejectAppointment(id) {
-        const reason = prompt('Please enter rejection reason:');
-        if (reason) {
-            alert('Appointment rejected. Visitor will be notified.');
-            // TODO: Call backend API to reject
+    async function approveAppointment(id) {
+        if (confirm('Approve this appointment?')) {
+            try {
+                const response = await fetch('/api/approve-appointment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ appointmentId: id })
+                });
+                if (response.ok) {
+                    alert('Appointment approved!');
+                    loadAppointments();
+                } else {
+                    alert('Failed to approve appointment');
+                }
+            } catch (error) {
+                console.error('Error approving appointment:', error);
+                alert('Error approving appointment');
+            }
         }
     }
+
+    async function rejectAppointment(id) {
+        const reason = prompt('Enter rejection reason:');
+        if (reason) {
+            try {
+                const response = await fetch('/api/reject-appointment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ appointmentId: id, reason: reason })
+                });
+                if (response.ok) {
+                    alert('Appointment rejected!');
+                    loadAppointments();
+                } else {
+                    alert('Failed to reject appointment');
+                }
+            } catch (error) {
+                console.error('Error rejecting appointment:', error);
+                alert('Error rejecting appointment');
+            }
+        }
+    }
+
+    loadAppointments();
+    setInterval(loadAppointments, 30000); // Refresh every 30 seconds
 </script>
 
 </body>

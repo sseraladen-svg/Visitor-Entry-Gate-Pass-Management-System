@@ -10,4 +10,5 @@ import java.util.List;
 public interface EntryLogRepository extends JpaRepository<EntryLogEntity, Long> {
     List<EntryLogEntity> findByPassId(String passId);
     List<EntryLogEntity> findByAction(String action);
+    List<EntryLogEntity> findAllByOrderByTimestampDesc();
 }
