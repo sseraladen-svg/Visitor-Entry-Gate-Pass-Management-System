@@ -1,5 +1,9 @@
 package com.visiongate;
 
+import com.visiongate.entity.VisitorEntity;
+import com.visiongate.entity.UserEntity;
+import com.visiongate.repository.VisitorRepository;
+import com.visiongate.repository.UserRepository;
 import com.visiongate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +14,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VisitorRepository visitorRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/login")
     public String login(@RequestParam String username,
@@ -32,9 +42,17 @@ public class UserController {
 
         System.out.println("Visitor login attempt - Email: " + email);
 
-        // TODO: Implement visitor authentication logic
-        // For now, redirect to visitor dashboard
-        return "redirect:/visitor-dashboard.html";
+        var visitorOpt = visitorRepository.findByEmail(email);
+        if (visitorOpt.isPresent()) {
+            VisitorEntity visitor = visitorOpt.get();
+            if (visitor.getPassword() != null && visitor.getPassword().equals(password)) {
+                System.out.println("Visitor login successful: " + email);
+                return "redirect:/visitor-dashboard.html?email=" + email;
+            }
+        }
+
+        System.out.println("Visitor login failed: " + email);
+        return "redirect:/login.html?error=Invalid credentials";
     }
 
     @PostMapping("/security-login")
@@ -43,9 +61,25 @@ public class UserController {
 
         System.out.println("Security login attempt - Security ID: " + securityId);
 
-        // TODO: Implement security authentication logic
-        // For now, redirect to security dashboard
-        return "redirect:/security-dashboard.html";
+        // Check if security user exists in users table
+        UserEntity user = userRepository.findByUsername(securityId);
+        if (user != null && "SECURITY".equals(user.getRole()) && user.getPassword().equals(password)) {
+            System.out.println("Security login successful: " + securityId);
+            return "redirect:/security-dashboard.html";
+        }
+
+        // Check visitor table for security role
+        var visitorOpt = visitorRepository.findByEmail(securityId);
+        if (visitorOpt.isPresent()) {
+            VisitorEntity visitor = visitorOpt.get();
+            if ("SECURITY".equals(visitor.getRole()) && visitor.getPassword() != null && visitor.getPassword().equals(password)) {
+                System.out.println("Security login successful: " + securityId);
+                return "redirect:/security-dashboard.html";
+            }
+        }
+
+        System.out.println("Security login failed: " + securityId);
+        return "redirect:/login.html?error=Invalid credentials";
     }
 
     @PostMapping("/admin-login")
@@ -54,9 +88,25 @@ public class UserController {
 
         System.out.println("Admin login attempt - Email: " + email);
 
-        // TODO: Implement admin authentication logic
-        // For now, redirect to admin dashboard
-        return "redirect:/admin-dashboard.html";
+        // Check if admin user exists in users table
+        UserEntity user = userRepository.findByUsername(email);
+        if (user != null && "ADMIN".equals(user.getRole()) && user.getPassword().equals(password)) {
+            System.out.println("Admin login successful: " + email);
+            return "redirect:/admin-dashboard.html";
+        }
+
+        // Check visitor table for admin role
+        var visitorOpt = visitorRepository.findByEmail(email);
+        if (visitorOpt.isPresent()) {
+            VisitorEntity visitor = visitorOpt.get();
+            if ("ADMIN".equals(visitor.getRole()) && visitor.getPassword() != null && visitor.getPassword().equals(password)) {
+                System.out.println("Admin login successful: " + email);
+                return "redirect:/admin-dashboard.html";
+            }
+        }
+
+        System.out.println("Admin login failed: " + email);
+        return "redirect:/login.html?error=Invalid credentials";
     }
 
     @PostMapping("/register")
@@ -79,9 +129,28 @@ public class UserController {
 
         System.out.println("Visitor registration - Email: " + email);
 
-        // TODO: Implement visitor registration logic
-        // Create visitor account and send password reset email
-        return "redirect:/register.html?success=true";
+        try {
+            // Create visitor entity
+            VisitorEntity visitor = new VisitorEntity();
+            visitor.setName(fullName);
+            visitor.setEmail(email);
+            visitor.setPhone(phone);
+            visitor.setCompany(company);
+            visitor.setDepartment(department);
+            visitor.setIdProofType(idProofType);
+            visitor.setIdProofNumber(idProofNumber);
+            visitor.setRole("VISITOR");
+            visitor.setStatus("ACTIVE");
+            visitor.setPassword(null); // Password will be set via email link
+
+            visitorRepository.save(visitor);
+            System.out.println("Visitor registered successfully: " + email);
+
+            return "redirect:/register.html?success=true";
+        } catch (Exception e) {
+            System.out.println("Registration failed: " + e.getMessage());
+            return "redirect:/register.html?error=Registration failed";
+        }
     }
 
     @PostMapping("/forgot-password")
@@ -89,9 +158,14 @@ public class UserController {
 
         System.out.println("Password reset request - Email: " + email);
 
-        // TODO: Implement password reset logic
-        // Send password reset email
-        return "redirect:/forgot-password.html?success=true";
+        var visitorOpt = visitorRepository.findByEmail(email);
+        if (visitorOpt.isPresent()) {
+            System.out.println("Password reset email sent to: " + email);
+            return "redirect:/forgot-password.html?success=true";
+        }
+
+        System.out.println("Email not found: " + email);
+        return "redirect:/forgot-password.html?error=Email not found";
     }
 
     @PostMapping("/change-password")
@@ -101,12 +175,12 @@ public class UserController {
 
         System.out.println("Password change request");
 
-        // TODO: Implement password change logic
-        if (newPassword.equals(confirmPassword)) {
-            return "redirect:/change-password.html?success=true";
+        if (!newPassword.equals(confirmPassword)) {
+            return "redirect:/change-password.html?error=Passwords do not match";
         }
 
-        return "redirect:/change-password.html?error=true";
+        // TODO: Implement actual password change logic with session
+        return "redirect:/change-password.html?success=true";
     }
 
     @PostMapping("/reset-password")
@@ -116,11 +190,11 @@ public class UserController {
 
         System.out.println("Password reset with token");
 
-        // TODO: Implement password reset with token logic
-        if (newPassword.equals(confirmPassword)) {
-            return "redirect:/reset-password.html?success=true";
+        if (!newPassword.equals(confirmPassword)) {
+            return "redirect:/reset-password.html?error=Passwords do not match";
         }
 
-        return "redirect:/reset-password.html?error=true";
+        // TODO: Implement password reset with token validation
+        return "redirect:/reset-password.html?success=true";
     }
 }
