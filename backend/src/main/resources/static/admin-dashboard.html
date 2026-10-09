@@ -18,22 +18,22 @@
         <div class="bento-grid">
             <div class="bento-card">
                 <h3>TOTAL_VISITORS</h3>
-                <div class="stat-number mono" id="totalVisitors">-</div>
+                <div class="stat-number mono" id="totalVisitors">0</div>
                 <div class="stat-label">ALL_TIME</div>
             </div>
             <div class="bento-card">
                 <h3>APPROVED</h3>
-                <div class="stat-number mono" id="approvedCount" style="color: var(--neon-green)">-</div>
+                <div class="stat-number mono" id="approvedCount" style="color: var(--neon-green)">0</div>
                 <div class="stat-label">APPOINTMENTS</div>
             </div>
             <div class="bento-card">
                 <h3>PENDING</h3>
-                <div class="stat-number mono" id="pendingCount" style="color: var(--neon-red)">-</div>
+                <div class="stat-number mono" id="pendingCount" style="color: var(--neon-red)">0</div>
                 <div class="stat-label">APPROVALS</div>
             </div>
             <div class="bento-card">
                 <h3>ACTIVE</h3>
-                <div class="stat-number mono" id="activeCount" style="color: var(--neon-blue)">-</div>
+                <div class="stat-number mono" id="activeCount" style="color: var(--neon-blue)">0</div>
                 <div class="stat-label">INSIDE_BUILDING</div>
             </div>
         </div>
@@ -41,22 +41,18 @@
         <div class="bento-grid" style="margin-top: 24px;">
             <div class="bento-card">
                 <h3>APPOINTMENTS</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">PENDING_APPROVALS</p>
                 <a href="host-approval.html" class="btn btn-primary btn-block">REVIEW</a>
             </div>
             <div class="bento-card">
                 <h3>GATE_PASSES</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">MANAGE_ALL_PASSES</p>
                 <a href="#" class="btn btn-secondary btn-block">VIEW</a>
             </div>
             <div class="bento-card">
                 <h3>VEHICLES</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">TRACK_PARKED_VEHICLES</p>
                 <a href="vehicle-management.html" class="btn btn-secondary btn-block">MANAGE</a>
             </div>
             <div class="bento-card">
                 <h3>REPORTS</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">VIEW_ANALYTICS</p>
                 <a href="reports.html" class="btn btn-secondary btn-block">ANALYZE</a>
             </div>
         </div>
@@ -64,16 +60,14 @@
         <div class="bento-card" style="margin-top: 24px;">
             <h3>RECENT_ACTIVITY</h3>
             <div id="recentActivity">
-                <p class="mono" style="color: var(--text-secondary);">Loading...</p>
+                <p class="mono" style="color: var(--text-secondary);">No recent activity</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Fetch live data from backend
         async function loadDashboardData() {
             try {
-                // Load stats
                 const statsResponse = await fetch('/api/stats');
                 if (statsResponse.ok) {
                     const stats = await statsResponse.json();
@@ -83,7 +77,6 @@
                     document.getElementById('activeCount').textContent = stats.activeVisitors;
                 }
 
-                // Load recent activity
                 const activityResponse = await fetch('/api/recent-activity');
                 if (activityResponse.ok) {
                     const data = await activityResponse.json();
@@ -101,16 +94,11 @@
                 }
             } catch (error) {
                 console.error('Failed to load dashboard data:', error);
-                document.getElementById('totalVisitors').textContent = '0';
-                document.getElementById('approvedCount').textContent = '0';
-                document.getElementById('pendingCount').textContent = '0';
-                document.getElementById('activeCount').textContent = '0';
-                document.getElementById('recentActivity').innerHTML = '<p class="mono" style="color: var(--text-secondary);">Failed to load data</p>';
             }
         }
 
         loadDashboardData();
-        setInterval(loadDashboardData, 30000); // Refresh every 30 seconds
+        setInterval(loadDashboardData, 30000);
     </script>
 </body>
 </html>

@@ -16,43 +16,21 @@
 
     <div class="dashboard-content">
         <div class="bento-card" style="margin-bottom: 24px;">
-            <h2>Welcome, Visitor</h2>
+            <h2>WELCOME_VISITOR</h2>
             <p class="mono" style="color: var(--text-secondary);">STATUS: <span class="status-badge status-approved">ACTIVE</span></p>
         </div>
 
         <div class="bento-grid">
             <div class="bento-card">
                 <h3>CURRENT_PASS</h3>
-                <div class="info-row">
-                    <span class="info-label">PASS_ID</span>
-                    <span class="info-value mono">GP_001</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">DATE</span>
-                    <span class="info-value mono">2024-10-09</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">TIME</span>
-                    <span class="info-value mono">14:30</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">STATUS</span>
-                    <span class="status-badge status-inside">INSIDE</span>
+                <div id="currentPass">
+                    <p class="mono" style="color: var(--text-secondary);">No active pass</p>
                 </div>
             </div>
             <div class="bento-card">
                 <h3>VISIT_DETAILS</h3>
-                <div class="info-row">
-                    <span class="info-label">HOST</span>
-                    <span class="info-value mono">Sarah_Connor</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">PURPOSE</span>
-                    <span class="info-value mono">Business_Meeting</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">LOCATION</span>
-                    <span class="info-value mono">Conference_Room_A</span>
+                <div id="visitDetails">
+                    <p class="mono" style="color: var(--text-secondary);">No visit details</p>
                 </div>
             </div>
         </div>
@@ -60,25 +38,76 @@
         <div class="bento-grid" style="margin-top: 24px;">
             <div class="bento-card">
                 <h3>VIEW_QR</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">DISPLAY_YOUR_CODE</p>
                 <a href="#" class="btn btn-primary btn-block">SHOW_QR</a>
             </div>
             <div class="bento-card">
                 <h3>HISTORY</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">PAST_VISITS</p>
                 <a href="visitor-history.html" class="btn btn-secondary btn-block">VIEW</a>
             </div>
             <div class="bento-card">
                 <h3>PASSWORD</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">CHANGE_PASSWORD</p>
                 <a href="change-password.html" class="btn btn-secondary btn-block">UPDATE</a>
             </div>
             <div class="bento-card">
                 <h3>LOGOUT</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">SECURE_EXIT</p>
                 <a href="index.html" class="btn btn-danger btn-block">LOGOUT</a>
             </div>
         </div>
     </div>
+
+    <script>
+        async function loadVisitorData() {
+            try {
+                const gatePassesResponse = await fetch('/api/gate-passes');
+                if (gatePassesResponse.ok) {
+                    const gatePasses = await gatePassesResponse.json();
+                    const activePass = gatePasses.find(gp => gp.status === 'INSIDE' || gp.status === 'APPROVED');
+                    
+                    const currentPassDiv = document.getElementById('currentPass');
+                    const visitDetailsDiv = document.getElementById('visitDetails');
+                    
+                    if (activePass) {
+                        currentPassDiv.innerHTML = `
+                            <div class="info-row">
+                                <span class="info-label">PASS_ID</span>
+                                <span class="info-value mono">${activePass.passId}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">DATE</span>
+                                <span class="info-value mono">${activePass.visitDate}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">TIME</span>
+                                <span class="info-value mono">${activePass.visitTime}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">STATUS</span>
+                                <span class="status-badge status-${activePass.status.toLowerCase()}">${activePass.status}</span>
+                            </div>
+                        `;
+                        
+                        visitDetailsDiv.innerHTML = `
+                            <div class="info-row">
+                                <span class="info-label">HOST</span>
+                                <span class="info-value mono">${activePass.hostName}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">PURPOSE</span>
+                                <span class="info-value mono">${activePass.purpose}</span>
+                            </div>
+                        `;
+                    } else {
+                        currentPassDiv.innerHTML = '<p class="mono" style="color: var(--text-secondary);">No active pass</p>';
+                        visitDetailsDiv.innerHTML = '<p class="mono" style="color: var(--text-secondary);">No visit details</p>';
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load visitor data:', error);
+            }
+        }
+
+        loadVisitorData();
+        setInterval(loadVisitorData, 30000);
+    </script>
 </body>
 </html>

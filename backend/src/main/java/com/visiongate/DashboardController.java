@@ -35,7 +35,8 @@ public class DashboardController {
     @GetMapping("/stats")
     public Map<String, Object> getStats() {
         Map<String, Object> stats = new HashMap<>();
-        stats.put("totalVisitors", visitorRepository.count());
+        // Count only visitors with VISITOR role
+        stats.put("totalVisitors", visitorRepository.findByRole("VISITOR").size());
         stats.put("approvedAppointments", appointmentRepository.findByStatus("APPROVED").size());
         stats.put("pendingAppointments", appointmentRepository.findByStatus("PENDING").size());
         stats.put("activeVisitors", gatePassRepository.findByStatus("INSIDE").size());

@@ -7,15 +7,15 @@
 }
 
 :root {
-    --bg-primary: #0d1117;
-    --bg-secondary: #161b22;
-    --bg-card: #21262d;
+    --bg-primary: #1a1f26;
+    --bg-secondary: #242c38;
+    --bg-card: #2d3542;
     --neon-green: #3fb950;
     --neon-blue: #58a6ff;
     --neon-red: #f85149;
-    --text-primary: #c9d1d9;
-    --text-secondary: #8b949e;
-    --border-color: #30363d;
+    --text-primary: #f0f6fc;
+    --text-secondary: #9ea7b3;
+    --border-color: #3d444f;
     --font-sans: 'Inter', 'Roboto', 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
 }

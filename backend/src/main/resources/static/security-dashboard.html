@@ -17,65 +17,100 @@
     <div class="dashboard-content">
         <div class="bento-grid">
             <div class="bento-card">
-                <h3 class="mono">001</h3>
-                <div class="stat-number mono">8</div>
-                <div class="stat-label">INSIDE_BUILDING</div>
+                <h3>INSIDE</h3>
+                <div class="stat-number mono" id="insideCount">0</div>
+                <div class="stat-label">BUILDING</div>
             </div>
             <div class="bento-card">
-                <h3 class="mono">002</h3>
-                <div class="stat-number mono" style="color: var(--neon-green)">12</div>
-                <div class="stat-label">PARKED_VEHICLES</div>
+                <h3>PARKED</h3>
+                <div class="stat-number mono" id="parkedCount" style="color: var(--neon-green)">0</div>
+                <div class="stat-label">VEHICLES</div>
             </div>
             <div class="bento-card">
-                <h3 class="mono">003</h3>
-                <div class="stat-number mono" style="color: var(--neon-red)">2</div>
-                <div class="stat-label">PENDING_VERIFICATION</div>
+                <h3>PENDING</h3>
+                <div class="stat-number mono" id="pendingCount" style="color: var(--neon-red)">0</div>
+                <div class="stat-label">APPROVALS</div>
             </div>
             <div class="bento-card">
-                <h3 class="mono">004</h3>
-                <div class="stat-number mono" style="color: var(--neon-blue)">156</div>
-                <div class="stat-label">TOTAL_TODAY</div>
+                <h3>TOTAL</h3>
+                <div class="stat-number mono" id="totalCount" style="color: var(--neon-blue)">0</div>
+                <div class="stat-label">TODAY</div>
             </div>
         </div>
 
         <div class="bento-grid" style="margin-top: 24px;">
             <div class="bento-card">
                 <h3>SCAN_QR</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">VERIFY_VISITOR_CODE</p>
                 <a href="qr-verification.html" class="btn btn-primary btn-block">SCAN</a>
             </div>
             <div class="bento-card">
                 <h3>SEARCH_PASS</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">FIND_BY_PASS_ID</p>
                 <a href="search-visitor.html" class="btn btn-secondary btn-block">SEARCH</a>
             </div>
             <div class="bento-card">
                 <h3>RECORD_ENTRY</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">LOG_VISITOR_ENTRY</p>
                 <a href="entry-recording.html" class="btn btn-secondary btn-block">ENTRY</a>
             </div>
             <div class="bento-card">
                 <h3>RECORD_EXIT</h3>
-                <p class="mono" style="color: var(--text-secondary); margin: 16px 0;">LOG_VISITOR_EXIT</p>
                 <a href="exit-recording.html" class="btn btn-secondary btn-block">EXIT</a>
             </div>
         </div>
 
         <div class="bento-card" style="margin-top: 24px;">
             <h3>ACTIVE_VISITORS</h3>
-            <div class="info-row">
-                <span class="info-label">PASS_ID</span>
-                <span class="info-value mono">GP_001</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">NAME</span>
-                <span class="info-value mono">John_Doe</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">STATUS</span>
-                <span class="status-badge status-inside">INSIDE</span>
+            <div id="activeVisitors">
+                <p class="mono" style="color: var(--text-secondary);">No active visitors</p>
             </div>
         </div>
     </div>
+
+    <script>
+        async function loadDashboardData() {
+            try {
+                const statsResponse = await fetch('/api/stats');
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    document.getElementById('insideCount').textContent = stats.activeVisitors;
+                    document.getElementById('pendingCount').textContent = stats.pendingAppointments;
+                    document.getElementById('totalCount').textContent = stats.totalVisitors;
+                }
+
+                const gatePassesResponse = await fetch('/api/gate-passes');
+                if (gatePassesResponse.ok) {
+                    const gatePasses = await gatePassesResponse.json();
+                    const parkedVehicles = gatePasses.filter(gp => gp.status === 'INSIDE').length;
+                    document.getElementById('parkedCount').textContent = parkedVehicles;
+
+                    const activeVisitorsDiv = document.getElementById('activeVisitors');
+                    const activeVisitors = gatePasses.filter(gp => gp.status === 'INSIDE');
+                    
+                    if (activeVisitors.length === 0) {
+                        activeVisitorsDiv.innerHTML = '<p class="mono" style="color: var(--text-secondary);">No active visitors</p>';
+                    } else {
+                        activeVisitorsDiv.innerHTML = activeVisitors.map(gp => `
+                            <div class="info-row">
+                                <span class="info-label">PASS_ID</span>
+                                <span class="info-value mono">${gp.passId}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">NAME</span>
+                                <span class="info-value mono">${gp.visitorName}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">STATUS</span>
+                                <span class="status-badge status-inside">INSIDE</span>
+                            </div>
+                        `).join('');
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+            }
+        }
+
+        loadDashboardData();
+        setInterval(loadDashboardData, 30000);
+    </script>
 </body>
 </html>
