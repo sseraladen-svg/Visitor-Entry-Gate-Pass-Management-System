@@ -14,7 +14,18 @@
 2. Start MySQL service
 3. Create database
 
-#### Option 2: Cloud MySQL (For Production)
+#### Option 2: Aiven Cloud MySQL (Current Production Database)
+The project is configured with Aiven Cloud MySQL. Connection details:
+- **Host:** mysql-3831cb6b-sseraladen-55f4.c.aivencloud.com
+- **Port:** 10392
+- **Database:** defaultdb
+- **User:** avnadmin
+- **Password:** d1b7db3a
+- **SSL Mode:** REQUIRED
+
+To use Aiven MySQL, uncomment the MySQL configuration in `application.properties` and comment out H2.
+
+#### Option 3: Other Cloud MySQL Providers
 - **AWS RDS** - https://aws.amazon.com/rds/mysql/
 - **Google Cloud SQL** - https://cloud.google.com/sql/docs/mysql
 - **Azure Database for MySQL** - https://azure.microsoft.com/en-us/products/mysql
@@ -39,6 +50,18 @@ FLUSH PRIVILEGES;
 
 #### For Local Development
 Edit `backend/src/main/resources/application.properties`:
+
+**Option A: H2 Database (Current - Development)**
+```properties
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.h2.console.enabled=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+```
+
+**Option B: Local MySQL**
 ```properties
 # Comment out H2 configuration
 # spring.datasource.url=jdbc:h2:mem:testdb
@@ -50,6 +73,22 @@ Edit `backend/src/main/resources/application.properties`:
 spring.datasource.url=jdbc:mysql://localhost:3306/visitor_gate_pass_system
 spring.datasource.username=root
 spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```
+
+**Option C: Aiven Cloud MySQL (Production)**
+```properties
+# Comment out H2 configuration
+# spring.datasource.url=jdbc:h2:mem:testdb
+# spring.datasource.driverClassName=org.h2.Driver
+# spring.datasource.username=sa
+# spring.datasource.password=
+
+# Uncomment Aiven MySQL configuration
+spring.datasource.url=jdbc:mysql://mysql-3831cb6b-sseraladen-55f4.c.aivencloud.com:10392/defaultdb?ssl-mode=REQUIRED&useSSL=true&trustServerCertificate=true
+spring.datasource.username=avnadmin
+spring.datasource.password=d1b7db3a
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 ```

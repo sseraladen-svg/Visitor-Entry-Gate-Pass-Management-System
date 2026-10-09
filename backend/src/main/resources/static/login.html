@@ -56,39 +56,12 @@
     <div class="divider-sm"></div>
 
     <div class="login-tabs">
-        <button class="login-tab active" onclick="showTab('visitor')">VISITOR</button>
-        <button class="login-tab" onclick="showTab('security')">SECURITY</button>
+        <button class="login-tab active" onclick="showTab('security')">SECURITY</button>
         <button class="login-tab" onclick="showTab('admin')">ADMIN</button>
     </div>
 
-    <!-- Visitor Login Form -->
-    <div id="visitorForm" class="login-form active">
-        <div id="visitorErrorMessage" class="error-message" style="display: none;"></div>
-
-        <form id="visitorLoginForm" action="/visitor-login" method="post">
-            <div class="form-group">
-                <label for="visitorEmail">Email Address</label>
-                <input type="email" id="visitorEmail" name="email" required placeholder="Enter your email address">
-            </div>
-
-            <div class="form-group">
-                <label for="visitorPassword">Password</label>
-                <div class="password-group">
-                    <input type="password" id="visitorPassword" name="password" required placeholder="Enter your password">
-                    <button type="button" class="password-toggle" onclick="togglePassword('visitorPassword', this)">👁</button>
-                </div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                <a href="forgot-password.html" class="link">Forgot Password?</a>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block btn-lg">LOGIN</button>
-        </form>
-    </div>
-
     <!-- Security Login Form -->
-    <div id="securityForm" class="login-form">
+    <div id="securityForm" class="login-form active">
         <div id="securityErrorMessage" class="error-message" style="display: none;"></div>
 
         <form id="securityLoginForm" action="/security-login" method="post">
@@ -140,8 +113,8 @@
     </div>
 
     <div class="section-separator">
-        <p style="text-align: center; color: var(--grey-600); margin-bottom: 16px;">New visitor?</p>
-        <a href="register.html" class="btn btn-secondary btn-block btn-lg">REGISTER NOW</a>
+        <p style="text-align: center; color: var(--grey-600); margin-bottom: 16px;">Forgot your password?</p>
+        <a href="forgot-password.html" class="btn btn-secondary btn-block btn-lg">RESET PASSWORD</a>
     </div>
 </div>
 
@@ -159,7 +132,6 @@
 
     function showTab(tab) {
         // Hide all forms
-        document.getElementById('visitorForm').classList.remove('active');
         document.getElementById('securityForm').classList.remove('active');
         document.getElementById('adminForm').classList.remove('active');
         
@@ -167,30 +139,14 @@
         document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
         
         // Show selected form and activate tab
-        if (tab === 'visitor') {
-            document.getElementById('visitorForm').classList.add('active');
-            document.querySelectorAll('.login-tab')[0].classList.add('active');
-        } else if (tab === 'security') {
+        if (tab === 'security') {
             document.getElementById('securityForm').classList.add('active');
-            document.querySelectorAll('.login-tab')[1].classList.add('active');
+            document.querySelectorAll('.login-tab')[0].classList.add('active');
         } else {
             document.getElementById('adminForm').classList.add('active');
-            document.querySelectorAll('.login-tab')[2].classList.add('active');
+            document.querySelectorAll('.login-tab')[1].classList.add('active');
         }
     }
-
-    document.getElementById('visitorLoginForm').addEventListener('submit', function(e) {
-        const email = document.getElementById('visitorEmail').value;
-        const password = document.getElementById('visitorPassword').value;
-        const errorDiv = document.getElementById('visitorErrorMessage');
-        
-        if (!email || !password) {
-            e.preventDefault();
-            errorDiv.textContent = 'Please enter both email and password.';
-            errorDiv.style.display = 'block';
-        }
-        // If valid, let the form submit to backend
-    });
 
     document.getElementById('securityLoginForm').addEventListener('submit', function(e) {
         const securityId = document.getElementById('securityId').value;
