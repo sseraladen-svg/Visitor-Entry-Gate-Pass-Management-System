@@ -5,115 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Appointment - Visitor Gate Pass Management System</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
 <body class="page-centered">
 
-<div class="card card-lg" style="max-width: 700px; width: 100%;">
+<div class="bento-card" style="max-width: 700px; width: 100%;">
     <div style="text-align: center; margin-bottom: 32px;">
-        <h1 style="font-size: 28px; margin-bottom: 8px;">VISITOR GATE PASS</h1>
-        <h2 style="font-size: 24px; color: var(--grey-600); margin-bottom: 0;">MANAGEMENT SYSTEM</h2>
+        <h1 style="font-size: 28px; margin-bottom: 8px;">VISITOR_GATE_PASS</h1>
+        <h2 style="font-size: 24px; color: var(--text-secondary); font-weight: 400; margin-bottom: 0;">MANAGEMENT_SYSTEM</h2>
     </div>
 
-    <div class="divider-sm"></div>
+    <h3 style="text-align: center; margin-bottom: 24px;">BOOK_APPOINTMENT</h3>
 
-    <h3 style="text-align: center; margin-bottom: 24px;">Book Appointment</h3>
-
-    <div id="successMessage" class="success-message" style="display: none;"></div>
-    <div id="errorMessage" class="error-message" style="display: none;"></div>
+    <div id="successMessage" class="bento-card" style="background: rgba(63, 185, 80, 0.1); border-color: var(--neon-green); display: none; margin-bottom: 24px;">
+        <p class="mono" style="color: var(--neon-green);">Appointment submitted successfully! Your appointment is pending approval.</p>
+    </div>
+    <div id="errorMessage" class="bento-card" style="background: rgba(248, 81, 73, 0.1); border-color: var(--neon-red); display: none; margin-bottom: 24px;">
+        <p class="mono" style="color: var(--neon-red);">Appointment submission failed. Please try again.</p>
+    </div>
 
     <form id="appointmentForm">
-        <div class="grid-2">
-            <div class="form-group">
-                <label for="visitorName">Your Name *</label>
-                <input type="text" id="visitorName" name="visitorName" required placeholder="Enter your full name">
-            </div>
-
-            <div class="form-group">
-                <label for="visitorEmail">Your Email *</label>
-                <input type="email" id="visitorEmail" name="visitorEmail" required placeholder="Enter your email address">
-            </div>
-
-            <div class="form-group">
-                <label for="visitorPhone">Phone Number *</label>
-                <input type="tel" id="visitorPhone" name="visitorPhone" required placeholder="Enter your phone number">
-            </div>
-
-            <div class="form-group">
-                <label for="hostName">Person to Meet *</label>
-                <input type="text" id="hostName" name="hostName" required placeholder="Enter the name of the person you're meeting">
-            </div>
-
-            <div class="form-group">
-                <label for="hostEmail">Host Email *</label>
-                <input type="email" id="hostEmail" name="hostEmail" required placeholder="Enter host email address">
-            </div>
-
-            <div class="form-group">
-                <label for="purpose">Purpose of Visit *</label>
-                <input type="text" id="purpose" name="purpose" required placeholder="e.g., Business Meeting, Interview">
-            </div>
-
-            <div class="form-group">
-                <label for="appointmentDate">Appointment Date *</label>
-                <input type="date" id="appointmentDate" name="appointmentDate" required>
-            </div>
-
-            <div class="form-group">
-                <label for="appointmentTime">Appointment Time *</label>
-                <input type="time" id="appointmentTime" name="appointmentTime" required>
-            </div>
+        <div class="form-group">
+            <label class="mono">YOUR_NAME</label>
+            <input type="text" id="visitorName" name="visitorName" required placeholder="Enter your full name">
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block btn-lg">SUBMIT APPOINTMENT</button>
+        <div class="form-group">
+            <label class="mono">YOUR_EMAIL</label>
+            <input type="email" id="visitorEmail" name="visitorEmail" required placeholder="Enter your email address">
+        </div>
+
+        <div class="form-group">
+            <label class="mono">PHONE_NUMBER</label>
+            <input type="tel" id="visitorPhone" name="visitorPhone" required placeholder="Enter your phone number">
+        </div>
+
+        <div class="form-group">
+            <label class="mono">PERSON_TO_MEET</label>
+            <input type="text" id="hostName" name="hostName" required placeholder="Enter the name of the person you're meeting">
+        </div>
+
+        <div class="form-group">
+            <label class="mono">HOST_EMAIL</label>
+            <input type="email" id="hostEmail" name="hostEmail" required placeholder="Enter host email address">
+        </div>
+
+        <div class="form-group">
+            <label class="mono">PURPOSE_OF_VISIT</label>
+            <input type="text" id="purpose" name="purpose" required placeholder="e.g., Business Meeting, Interview">
+        </div>
+
+        <div class="form-group">
+            <label class="mono">APPOINTMENT_DATE</label>
+            <input type="date" id="appointmentDate" name="appointmentDate" required>
+        </div>
+
+        <div class="form-group">
+            <label class="mono">APPOINTMENT_TIME</label>
+            <input type="time" id="appointmentTime" name="appointmentTime" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg">SUBMIT_APPOINTMENT</button>
     </form>
 
-    <div class="section-separator">
-        <p style="text-align: center; color: var(--grey-600); margin-bottom: 16px;">Want to check your appointment status?</p>
-        <a href="my-appointments.html" class="btn btn-secondary btn-block btn-lg">MY APPOINTMENTS</a>
+    <div style="text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+        <p class="mono" style="color: var(--text-secondary); margin-bottom: 16px;">CHECK_YOUR_APPOINTMENTS?</p>
+        <a href="my-appointments.html" class="btn btn-secondary btn-block">MY_APPOINTMENTS</a>
     </div>
 </div>
 
 <script>
-    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+    document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const formData = {
-            visitorName: document.getElementById('visitorName').value,
-            visitorEmail: document.getElementById('visitorEmail').value,
-            visitorPhone: document.getElementById('visitorPhone').value,
-            company: document.getElementById('company').value,
-            hostName: document.getElementById('hostName').value,
-            hostEmail: document.getElementById('hostEmail').value,
-            purpose: document.getElementById('purpose').value,
-            appointmentDate: document.getElementById('appointmentDate').value,
-            appointmentTime: document.getElementById('appointmentTime').value
-        };
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
 
         const successDiv = document.getElementById('successMessage');
         const errorDiv = document.getElementById('errorMessage');
 
-        // TODO: Replace with actual API call
-        if (formData.visitorName && formData.visitorEmail && formData.visitorPhone) {
-            successDiv.textContent = 'Appointment request submitted successfully! The host will be notified for approval. You will receive an email once your appointment is approved.';
-            successDiv.style.display = 'block';
-            errorDiv.style.display = 'none';
-            
-            document.getElementById('appointmentForm').reset();
-        } else {
-            errorDiv.textContent = 'Please fill in all required fields.';
+        try {
+            const response = await fetch('/book-appointment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(data)
+            });
+
+            if (response.ok || response.redirected) {
+                successDiv.style.display = 'block';
+                errorDiv.style.display = 'none';
+                document.getElementById('appointmentForm').reset();
+            } else {
+                throw new Error('Appointment submission failed');
+            }
+        } catch (error) {
+            console.error('Appointment error:', error);
             errorDiv.style.display = 'block';
             successDiv.style.display = 'none';
         }

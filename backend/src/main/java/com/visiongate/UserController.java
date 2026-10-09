@@ -113,35 +113,33 @@ public class UserController {
     public String register(@RequestParam String fullName,
                           @RequestParam String email,
                           @RequestParam String phone,
+                          @RequestParam String password,
                           @RequestParam String company,
                           @RequestParam(required = false) String department,
                           @RequestParam(required = false) String idProofType,
-                          @RequestParam(required = false) String idProofNumber,
-                          @RequestParam String hostName,
-                          @RequestParam String hostEmail,
-                          @RequestParam String purpose,
-                          @RequestParam String visitDate,
-                          @RequestParam String visitTime,
-                          @RequestParam(required = false) String vehicleNumber,
-                          @RequestParam(required = false) String vehicleType,
-                          @RequestParam(required = false) String vehicleModel,
-                          @RequestParam(required = false) String vehicleColor) {
+                          @RequestParam(required = false) String idProofNumber) {
 
         System.out.println("Visitor registration - Email: " + email);
 
         try {
+            // Check if email already exists
+            if (visitorRepository.findByEmail(email).isPresent()) {
+                System.out.println("Email already exists: " + email);
+                return "redirect:/register.html?error=Email already registered";
+            }
+
             // Create visitor entity
             VisitorEntity visitor = new VisitorEntity();
             visitor.setName(fullName);
             visitor.setEmail(email);
             visitor.setPhone(phone);
+            visitor.setPassword(password);
             visitor.setCompany(company);
             visitor.setDepartment(department);
             visitor.setIdProofType(idProofType);
             visitor.setIdProofNumber(idProofNumber);
             visitor.setRole("VISITOR");
             visitor.setStatus("ACTIVE");
-            visitor.setPassword(null); // Password will be set via email link
 
             visitorRepository.save(visitor);
             System.out.println("Visitor registered successfully: " + email);
@@ -149,6 +147,7 @@ public class UserController {
             return "redirect:/register.html?success=true";
         } catch (Exception e) {
             System.out.println("Registration failed: " + e.getMessage());
+            e.printStackTrace();
             return "redirect:/register.html?error=Registration failed";
         }
     }
