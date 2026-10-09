@@ -228,7 +228,7 @@ input::placeholder {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -334,6 +334,15 @@ input::placeholder {
 .login-card {
     max-width: 440px;
     width: 100%;
+}
+
+/* Login forms */
+.login-form {
+    display: none;
+}
+
+.login-form.active {
+    display: block;
 }
 
 /* Dashboard */

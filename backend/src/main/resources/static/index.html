@@ -5,207 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitor Gate Pass Management System</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .hero-section {
-            background: var(--primary-white);
-            border: 2px solid var(--primary-black);
-            border-radius: 12px;
-            padding: 64px 48px;
-            margin-bottom: 32px;
-            text-align: center;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: var(--primary-black);
-            color: var(--primary-white);
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 24px;
-        }
-
-        .hero-title {
-            font-size: 48px;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            letter-spacing: -0.03em;
-        }
-
-        .hero-subtitle {
-            font-size: 24px;
-            color: var(--grey-600);
-            font-weight: 500;
-            margin-bottom: 32px;
-        }
-
-        .hero-description {
-            font-size: 16px;
-            color: var(--grey-500);
-            max-width: 500px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .feature-box {
-            background: var(--primary-white);
-            border: 2px solid var(--primary-black);
-            border-radius: 12px;
-            padding: 32px 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-box:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .feature-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--primary-black);
-        }
-
-        .feature-text {
-            font-size: 14px;
-            color: var(--grey-600);
-            line-height: 1.5;
-        }
-
-        .action-section {
-            background: var(--primary-white);
-            border: 2px solid var(--primary-black);
-            border-radius: 12px;
-            padding: 48px;
-        }
-
-        .action-section h3 {
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .action-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .action-cards.grid-2 {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .action-card {
-            background: var(--grey-100);
-            border: 2px solid var(--grey-300);
-            border-radius: 10px;
-            padding: 32px 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .action-card:hover {
-            border-color: var(--primary-black);
-            background: var(--primary-white);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .action-card h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--primary-black);
-        }
-
-        .action-card p {
-            font-size: 14px;
-            color: var(--grey-600);
-            margin-bottom: 0;
-        }
-
-        .footer-info {
-            text-align: center;
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid var(--grey-300);
-        }
-
-        .footer-info p {
-            font-size: 13px;
-            color: var(--grey-500);
-            margin-bottom: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                padding: 40px 24px;
-            }
-
-            .hero-title {
-                font-size: 32px;
-            }
-
-            .hero-subtitle {
-                font-size: 20px;
-            }
-
-            .features-grid,
-            .action-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
-<body class="page-centered" style="background: var(--grey-100);">
+<body class="page-centered">
 
-<div style="max-width: 800px; width: 100%; padding: 32px 24px;">
+<div class="bento-card" style="max-width: 900px; width: 100%;">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 class="mono" style="font-size: 14px; color: var(--neon-green); margin-bottom: 16px;">SYSTEM_READY</h1>
+        <h1 style="font-size: 42px; margin-bottom: 8px;">VISITOR_GATE_PASS</h1>
+        <h2 style="font-size: 28px; color: var(--text-secondary); font-weight: 400;">MANAGEMENT_SYSTEM</h2>
+    </div>
 
-    <div class="action-section">
-        <h3 style="margin-bottom: 32px;">Visitor Gate Pass Management System</h3>
-        <div class="action-cards" style="grid-template-columns: repeat(3, 1fr); max-width: 800px; margin: 0 auto;">
-            <div class="action-card" onclick="window.location.href='login.html'">
-                <div style="font-size: 48px; margin-bottom: 20px;">🔐</div>
-                <h4>Login</h4>
-                <p>Access your account</p>
-            </div>
-            
-            <div class="action-card" onclick="window.location.href='register.html'">
-                <div style="font-size: 48px; margin-bottom: 20px;">📝</div>
-                <h4>Register</h4>
-                <p>New visitor registration</p>
-            </div>
-
-            <div class="action-card" onclick="window.location.href='appointment.html'">
-                <div style="font-size: 48px; margin-bottom: 20px;">📅</div>
-                <h4>Book Appointment</h4>
-                <p>Schedule your visit</p>
-            </div>
+    <div class="bento-grid" style="margin-bottom: 32px;">
+        <div class="bento-card">
+            <h3 class="mono">001</h3>
+            <div class="stat-number mono" style="color: var(--neon-green)">SECURE</div>
+            <div class="stat-label">AUTHENTICATION</div>
+        </div>
+        <div class="bento-card">
+            <h3 class="mono">002</h3>
+            <div class="stat-number mono" style="color: var(--neon-blue)">DIGITAL</div>
+            <div class="stat-label">PASS_MANAGEMENT</div>
+        </div>
+        <div class="bento-card">
+            <h3 class="mono">003</h3>
+            <div class="stat-number mono" style="color: var(--neon-red)">REAL-TIME</div>
+            <div class="stat-label">VERIFICATION</div>
         </div>
     </div>
 
-    <div class="footer-info">
-        <p>© 2026 Visitor Gate Pass Management System</p>
+    <div class="bento-grid">
+        <div class="action-card" onclick="window.location.href='login.html'">
+            <div style="font-size: 48px; margin-bottom: 16px;">🔐</div>
+            <h4>LOGIN</h4>
+            <p class="mono">ACCESS_ACCOUNT</p>
+        </div>
+        
+        <div class="action-card" onclick="window.location.href='register.html'">
+            <div style="font-size: 48px; margin-bottom: 16px;">📝</div>
+            <h4>REGISTER</h4>
+            <p class="mono">NEW_VISITOR</p>
+        </div>
+
+        <div class="action-card" onclick="window.location.href='appointment.html'">
+            <div style="font-size: 48px; margin-bottom: 16px;">📅</div>
+            <h4>APPOINTMENT</h4>
+            <p class="mono">SCHEDULE_VISIT</p>
+        </div>
     </div>
 
+    <div style="text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+        <p class="mono" style="color: var(--text-secondary); font-size: 12px;">© 2026 VISION_GATE_SYSTEM</p>
+    </div>
 </div>
 
 </body>
