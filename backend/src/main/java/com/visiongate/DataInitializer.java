@@ -21,24 +21,24 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Initializing default users...");
 
-        // Create default admin user
-        if (userRepository.findByUsername("admin") == null) {
+        // Create default admin user with email
+        if (userRepository.findByUsername("admin@visiongate.com") == null) {
             UserEntity admin = new UserEntity();
-            admin.setUsername("admin");
+            admin.setUsername("admin@visiongate.com");
             admin.setPassword("admin123");
             admin.setRole("ADMIN");
             userRepository.save(admin);
-            System.out.println("Default admin user created: admin/admin123");
+            System.out.println("Default admin user created: admin@visiongate.com/admin123");
         }
 
-        // Create default security user
-        if (userRepository.findByUsername("security") == null) {
+        // Create default security user with email
+        if (userRepository.findByUsername("security@visiongate.com") == null) {
             UserEntity security = new UserEntity();
-            security.setUsername("security");
+            security.setUsername("security@visiongate.com");
             security.setPassword("security123");
             security.setRole("SECURITY");
             userRepository.save(security);
-            System.out.println("Default security user created: security/security123");
+            System.out.println("Default security user created: security@visiongate.com/security123");
         }
 
         // Create default visitor
